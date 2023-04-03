@@ -32,6 +32,8 @@ def getData(filename):
                 elif lines[i].startswith("CPR: "):
                     cpr = lines[i][5:].strip()
                     person.setCPR(cpr)
+                    if int(cpr[-1])%2==0: person.setGender("Female")
+                    else: person.setGender("Male")
                 elif lines[i].startswith("First name: "):
                     fname = lines[i][11:].strip()
                     person.setFirstName(fname)

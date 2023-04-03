@@ -2,7 +2,7 @@ import re
 
 class Person():
 
-    def __init__(self, cpr="", firstname="", lastname="", height=None, weight=None, eyecolor="", bloodtype="", children=[]):
+    def __init__(self, cpr="", firstname="", lastname="", height=None, weight=None, eyecolor="", bloodtype="", children=[],gender=None):
         self.CPR = cpr
         self.FirstName=firstname
         self.LastName=lastname
@@ -11,6 +11,7 @@ class Person():
         self.EyeColor=eyecolor
         self.BloodType=bloodtype
         self.Children=children
+        self.Gender=gender
 
 
     # Setters for attributes
@@ -58,6 +59,10 @@ class Person():
             self.BloodType=bloodtype
         else:
             raise ValueError("Invalid blood type.")
+    
+    def setGender(self, gender):
+        if gender not in ["Male", "Female"]: raise ValueError("Invalid gender given")
+        self.Gender=gender
 
     def addChildren(self, children):
         if isinstance(children, list) and all(isinstance(item, str) for item in children):
@@ -66,6 +71,6 @@ class Person():
             raise TypeError("Method requires list of strings (cpr-numbers) as argument")
 
     def __str__(self):
-        s = f"CPR: {self.CPR}\nName: {self.FirstName} {self.LastName}\nHeight: {self.Height}\nWeight: {self.Weight}\nEye color: {self.EyeColor}\nBlood type: {self.BloodType}\nChildren: {self.Children}"
+        s = f"CPR: {self.CPR}\nName: {self.FirstName} {self.LastName}\nGender: {self.Gender}\nHeight: {self.Height}\nWeight: {self.Weight}\nEye color: {self.EyeColor}\nBlood type: {self.BloodType}\nChildren: {self.Children}"
         return s
     
