@@ -66,6 +66,6 @@ class Person():
             raise TypeError("Method requires list of strings (cpr-numbers) as argument")
 
     def __str__(self):
-        s = f"CPR: {self.CPR} Name: {self.FirstName} {self.LastName}"
+        s = f"CPR: {self.CPR}\nName: {self.FirstName} {self.LastName}\nHeight: {self.Height}\nWeight: {self.Weight}\nEye color: {self.EyeColor}\nBlood type: {self.BloodType}\nChildren: {self.Children}"
         return s
     

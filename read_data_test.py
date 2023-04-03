@@ -50,8 +50,11 @@ def getData(filename):
                 elif lines[i].startswith("Blood type: "):
                     bloodtype=lines[i][11:].strip()
                     person.setBloodType(bloodtype)
+                elif lines[i].startswith("Children: "):
+                    children=lines[i][9:].split()
+                    person.addChildren(children)
                 else:
-                    print("Adding children to object still to be implemented!")
+                    pass
                 i+=1
             if i >= len(lines): read = False
         
