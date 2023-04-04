@@ -24,7 +24,6 @@ def getData(filename):
         while read:
             person = Person()
             while i < len(lines):
-                print(i)
                 if lines[i].strip()=="":
                     dict[person.CPR] = person
                     i+=1
@@ -64,17 +63,3 @@ def getData(filename):
     else:
 
         raise FileNotFoundError("Could not find: ", filename)
-
-
-
-def main():
-
-    d = getData("people.db")
-
-
-    # Should print "CPR: 220567-1489 Name: Mikael Wad"
-    print(d["220567-1489"])
-
-
-if __name__=="__main__":
-    main()
