@@ -2,7 +2,7 @@ import re
 
 class Person():
 
-    def __init__(self, cpr="", firstname="", lastname="", height=None, weight=None, eyecolor="", bloodtype="", children=[],gender=None):
+    def __init__(self, cpr="", firstname="", lastname="", height=None, weight=None, eyecolor="", bloodtype="", children=[],gender=None,parents=[]):
         self.CPR = cpr
         self.FirstName=firstname
         self.LastName=lastname
@@ -12,6 +12,7 @@ class Person():
         self.BloodType=bloodtype
         self.Children=children
         self.Gender=gender
+        self.Parents=parents
 
 
     # Setters for attributes
@@ -70,7 +71,17 @@ class Person():
         else:
             raise TypeError("Method requires list of strings (cpr-numbers) as argument")
 
+    def addParent(self, parent):
+        if len(self.Parents)==2:
+            raise Exception("Cannot have more than two parents")
+        cpr_regex=r"\d{6}-\d{4}"
+        if not re.match(cpr_regex, parent):
+            raise ValueError("Parent must be a string of a CPR number")
+        self.Parents.append(parent)
+            
+        
+    
     def __str__(self):
-        s = f"CPR: {self.CPR}\nName: {self.FirstName} {self.LastName}\nGender: {self.Gender}\nHeight: {self.Height}\nWeight: {self.Weight}\nEye color: {self.EyeColor}\nBlood type: {self.BloodType}\nChildren: {self.Children}"
+        s = f"CPR: {self.CPR}\nName: {self.FirstName} {self.LastName}\nGender: {self.Gender}\nHeight: {self.Height}\nWeight: {self.Weight}\nEye color: {self.EyeColor}\nBlood type: {self.BloodType}\nChildren: {self.Children}\nParents: {self.Parents}"
         return s
     

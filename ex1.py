@@ -108,7 +108,8 @@ def calcAgeDistTest(people):
 
 def main():
 
-    people = getData(r"data\people.db")
+    people = getData()
+
 
     m_ages_test, f_ages_test = calcAgeDistTest(people)
 

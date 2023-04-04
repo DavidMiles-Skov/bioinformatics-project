@@ -6,8 +6,21 @@ import os
 - Will create Dictionary with CPR->Person object, to make accessing relatives easier
 
 """
+# TO BE IMPLEMENTED
+# def findParents(dict):
+#     seen_children = set()
+#     for parent_cpr, parent in dict.items():
+#         if parent.Children != []:
+#             for child in parent.Children:
+#                 if child not in seen_children:
+#                     dict[child].addParent(parent_cpr)
+#                     seen_children.add(child)
+#     return dict
 
-def getData(filename):
+
+
+
+def getData(filename=r"data\people.db"):
     
     dict={}
     
