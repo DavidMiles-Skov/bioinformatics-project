@@ -1,8 +1,7 @@
 from read_data import getData
 
 """
-Attempting to solve exercise 1.
-
+Exercise 1.
 - Will use dictionary to store age ranges as shown on project webpage.
 - The same will be done with danish population data.
 - The two will be compared.

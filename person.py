@@ -72,7 +72,7 @@ class Person():
             raise TypeError("Method requires list of strings (cpr-numbers) as argument")
 
     def addParent(self, parent):
-        if len(self.Parents)==2:
+        if len(self.Parents)>=2:
             raise Exception("Cannot have more than two parents")
         cpr_regex=r"\d{6}-\d{4}"
         if not re.match(cpr_regex, parent):
