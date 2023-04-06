@@ -116,16 +116,10 @@ def main():
     m_ages_data, f_ages_data = calcAgeDistDKData()
 
     print("------Comparing age distributions------")
-    print("Distribution of ages from \"people.db\":")
+    print("Age range:\nGender: people.db\tDKpopulation.csv:\n")
     
     for ages in m_ages_test.keys():
-        print(f"{ages}:\nMale: {m_ages_test[ages]}%\nFemale: {f_ages_test[ages]}%\n")
-    
-    print("Distribution of ages from \"DKpopulation.csv\":")
-
-    for ages in m_ages_test.keys():
-        print(f"{ages}:\nMale: {m_ages_data[ages]}%\nFemale: {f_ages_data[ages]}%\n")
-    
+        print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}")
     
 
 
