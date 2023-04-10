@@ -5,7 +5,7 @@ from collections import Counter
 
 
 
-def firstTimeFatherAge(persondict):
+def calcAveFirstTimeFatherAge(persondict):
     """
     Will calculate the age at which fathers have their first child.
     - Father: XXXXFF-XXXX
@@ -20,19 +20,15 @@ def firstTimeFatherAge(persondict):
             # Finding the eldest child
             eldest = min([int(x[4:6]) for x in person.Children])
             ages.append(eldest-yFather)
-    ages.sort()
-    counter = Counter(ages)
-    age_vals = [i for i in counter.keys()]
-    prop = [i/len(ages) for i in counter.values()]
-    plt.bar(age_vals, prop)
-    plt.xlabel("Age of first-time fatherhood")
-    plt.ylabel("Proportion")
-    plt.title("Distribution of ages of first-time fatherhood")
-    plt.show()
+    x = 31.3 # Average age of first-time fathers in denmark according to statistics denmark
+    print("--------------Comparison of mean age of first-time fatherhood----------------")
+    print(f"Test data: {round(sum(ages)/len(ages), 1)}\nData from Statistics Denmark: {x}")
+
+
 
 def main():
     d = getData()
-    firstTimeFatherAge(d)
+    calcAveFirstTimeFatherAge(d)
 
 
 if __name__=="__main__":

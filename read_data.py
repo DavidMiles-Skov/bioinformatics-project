@@ -7,29 +7,7 @@ import copy
 - Will create Dictionary with CPR->Person object, to make accessing relatives easier
 
 """
-# TO BE IMPLEMENTED
-# def addParents(dict):
-#     # Iterate through dictionary
-#     for cpr, person in dict.items():
-#         if person.Children != []: # If a person has Children
-#             print("Found person with children:\n")
-#             print(person)
-#             for child in person.Children: # Iterate through children
-#                 dict[child].addParent(cpr) # Add parent cpr to child
-#                 # print(f"Parent successfully added to child {child}. Checking:\n")
-#                 # print(dict[child])
-#                 # print()
-#                 break # Only need to iterate over first child, calling add parent to first child will do so for all children?! Very strange
-#             # To check with Peter, I have no idea why this is the case         
-#             # print("Checking very weird behaviour:\n")
-#             # for child in person.Children:
-#             #     print(child)
-#             #     print(dict[child])
-#             # exit()
-#     return dict
 
-
-# Trying different method - Will be much more inefficient, but should hopefully be correct
 def addParents(dict): 
     cpr_lst = dict.keys()
     new_dict = {}

@@ -7,10 +7,9 @@ def main():
     people = getData()
 
     # Checking if adding parents worked
-
-
-
-    print(people["090815-3787"])
+    for cpr, person in people.items():
+        if len(person.Parents)==1:
+            print("!")
 
 
 
