@@ -17,10 +17,10 @@ Seems to me it makes more sense for the "getData" function to be changed to acce
 I suppose i'll leave this as a function for the time being
 """
 
-def Parenthood_percentage(filename=r"people.db"):                          #Needs to be updated to the proper path, this was just made from own directory
+def Parenthood_percentage():                          #Needs to be updated to the proper path, this was just made from own directory
 	"""Percentage of males and females who are not parents"""
 	males, females = [], []
-	people = getData(filename)
+	people = getData()
 
 
 	for person in people.values():                                                                 #Iterating over the person class values in the getData dict

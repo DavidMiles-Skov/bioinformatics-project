@@ -44,6 +44,11 @@ def addParents(dict):
             
 
 def getData(filename=r"data\people.db"):
+
+    """
+    getData: Takes filename (str) as input and returns a dictionary of cpr->person object
+    - Creates main datastructure this project will utilise
+    """
     
     dict={}
     
@@ -94,7 +99,7 @@ def getData(filename=r"data\people.db"):
                     pass
                 i+=1
             if i >= len(lines): read = False
-        return dict
+        return addParents(dict)
     else:
 
         raise FileNotFoundError("Could not find: ", filename)

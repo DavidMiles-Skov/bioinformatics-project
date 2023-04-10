@@ -114,7 +114,7 @@ def main():
 
     m_ages_data, f_ages_data = calcAgeDistDKData()
 
-    print("------Comparing age distributions------")
+    print("------Comparing age and gender distributions------")
     print("Age range:\nGender: people.db\tDKpopulation.csv:\n")
     
     for ages in m_ages_test.keys():
