@@ -17,17 +17,19 @@ def firstTimeFatherAge(persondict):
 
     for person in persondict.values():
         if person.Children != [] and person.Gender=="Male":
-            print(person.CPR)
             yFather = int(person.CPR[4:6])
-            print(yFather)
             # Finding the eldest child
             eldest = min([int(x[4:6]) for x in person.Children])
             ages.append(eldest-yFather)
     ages.sort()
     counter = Counter(ages)
-    for number, count in counter.items():
-        print(f"{number}: {count}")
-    
+    age_vals = [i for i in counter.keys()]
+    prop = [i/len(ages) for i in counter.values()]
+    plt.bar(age_vals, prop)
+    plt.xlabel("Age of first-time fatherhood")
+    plt.ylabel("Proportion")
+    plt.title("Distribution of ages of first-time fatherhood")
+    plt.show()
 
 def main():
     d = getData()
