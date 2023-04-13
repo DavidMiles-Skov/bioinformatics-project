@@ -79,6 +79,39 @@ class Person():
             raise ValueError("Parent must be a string of a CPR number")
         self.Parents.append(parent)
             
+    # Getters
+
+    def getCPR(self):
+        return self.CPR
+
+
+    def getFirstName(self):
+        return self.FirstName
+        
+    def getLastName(self):
+        return self.LastName
+    
+    def getHeight(self):
+        return self.Height
+    
+    def getWeight(self):
+        return self.Weight
+        
+    def getEyeColor(self):
+        return self.EyeColor
+        
+    def getBloodType(self):
+        return self.BloodType
+    
+    def getGender(self):
+        return self.Gender
+
+    def getChildren(self):
+        return self.Children
+        
+
+    def getParents(self):
+        return self.Parents
         
     
     def __str__(self):
