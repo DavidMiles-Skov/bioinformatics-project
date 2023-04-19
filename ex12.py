@@ -13,6 +13,7 @@ Using some of the same coding from ex7
 Average height can be changed
 Havent made the formatting witb a "main()"
 Output needs better formatting
+directory needs fixing to github direct
 """
 
 def height_comparison_of_parents():
