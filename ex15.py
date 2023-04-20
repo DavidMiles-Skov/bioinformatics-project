@@ -33,7 +33,7 @@ def not_the_parents():
 			pbloodtype = (p2.BloodType[:-1], p1.BloodType[:-1])                 #Parents blood types, mother's first
 			cbloodtype = person.BloodType[:-1]                                  #Person's blood type
 			if cbloodtype not in inheritance[pbloodtype]:
-				kids.append(person.CPR)
+				kids.append(person)
 
 	return kids
 
