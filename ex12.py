@@ -10,7 +10,6 @@ Tall and short are above and below those limits respectively
 
 Notes;
 Using some of the same coding from ex7
-Output needs better formatting
 directory needs fixing to github direct
 Extra note:
 It seems like the somewhat randomization of the dataset has made the average height of women a lot higher than whats typical,
