@@ -5,6 +5,7 @@ Attempting to solve exercise 15:
 Using the inheritance chart from https://canadiancrc.com/paternity_determination_blood_type.aspx 
 
 Notes:
+As far as i could read the rhesus +/- system is inherited seperately from the ABO-system, so I've only based it on the ABO-system
 Directory needs fixing
 Output needs fixing
 "main()" formatting not implemented yet*
