@@ -4,17 +4,10 @@ from read_data import getData
 
 """
 Attempting to solve exercise 6:
-
 - Count number of females, who do not have children
 - Count number of males, who do not have children
 - Divide them respectively with the total amount of female/male and multiply with 100%
 
-Notes:
-Is there much point in using a function for this exercise? 
-Only neccesary object is the dict from the "getData" function, which auto selects "people.db"
-Rest is simply itterating over the dict.values, which are all of the "person" class, and so we use the methods of that class (.Gender and .Children)
-Seems to me it makes more sense for the "getData" function to be changed to accept any given data file 
-I suppose i'll leave this as a function for the time being
 """
 
 def Parenthood_percentage():                          #Needs to be updated to the proper path, this was just made from own directory
