@@ -8,6 +8,7 @@ Notes:
 Directory needs fixing
 Output needs fixing
 "main()" formatting not implemented yet*
+The part making the father always p1 is actually irrelevant since it doesnt matter for inheritance
 
 """
 
@@ -25,7 +26,7 @@ def not_the_parents():
 
 		parents = person.Parents
 		if parents != []:
-		#Making it so the father is always defined as p1, atm this is only really needed cause i wrote the mother's blood types as 1st blood type in the dict
+		#Making it so the father is always defined as p1
 			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
 				p1 = people[parents[1]]
 				p2 = people[parents[0]]
