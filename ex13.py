@@ -13,12 +13,10 @@ Output can be cleaned up
 
 """
 
-def children_heights():
+def children_heights(people):
 	"""Function for finding the percentage of tall children with 2 tall parents"""
 	girls, boys = [], []
 	tall, normal, short = 0,0,0
-
-	people = getData()
 
 	for cpr, person in people.items():
 
@@ -52,4 +50,9 @@ def children_heights():
 	total = tall + normal + short
 	return ((tall/total)*100, (normal/total)*100, (short/total)*100)
 
-print(children_heights())
+def main():
+	people = getData()
+	children_heights(people)
+
+if __name__ == "__main()__":
+	main()
