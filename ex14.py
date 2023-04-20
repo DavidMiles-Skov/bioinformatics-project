@@ -10,6 +10,8 @@ Notes:
 havent made the "main()" formatting
 output needs to be cleaned up so you can tell what percentage is what
 Directory needs to be fixed
+The BMI calculation could be added as a method for the person class,
+that way we could skip it here, should be simple since every person has a weight and height already
 """
 
 def BMI_of_parents():
@@ -30,13 +32,9 @@ def BMI_of_parents():
 
 		if parents != [] and parents not in encountered_parents:
 
-			#Making it so the father is always defined as p1
-			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
 				p1 = people[parents[1]]
 				p2 = people[parents[0]]
-			elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
-				p1 = people[parents[0]]
-				p2 = people[parents[1]]
+
 
 			h1, h2 = int(p1.Height), int(p2.Height)
 			w1, w2 = int(p1.Weight), int(p2.Weight)
