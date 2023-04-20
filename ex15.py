@@ -25,7 +25,7 @@ def not_the_parents():
 
 		parents = person.Parents
 		if parents != []:
-		#Making it so the father is always defined as p1
+		#Making it so the father is always defined as p1, atm this is only really needed cause i wrote the mother's blood types as 1st blood type in the dict
 			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
 				p1 = people[parents[1]]
 				p2 = people[parents[0]]
