@@ -6,6 +6,7 @@ from read_data import getData
 Attempting to solve exercise 13
 Tall is considered above 184.4 cm for men and above 170.2 for women
 Notes:
+Output formatting code-wise is a bit, yeah, not to familiar with formatting for strings, perhaps you have a better solution
 Same as in ex12, Ive realied the height for women on average is very tall compared to denmark statistics
 Maybe we should not differentiate between them in that case
 
@@ -46,7 +47,7 @@ def children_heights(people):
 		if girl < 164.2: short += 1
 
 	total = tall + normal + short
-	print("Height\tPercentage" + "\nTall\t"+str((tall/total)*100) + "\nNormal\t"+str((normal/total)*100) + "\nShort\t"+str((short/total)*100))
+	print("Height\tPercentage" + "\nTall\t"+str((tall/total)*100)+"%" + "\nNormal\t"+str((normal/total)*100)+"%" + "\nShort\t"+str((short/total)*100)+"%")
 
 def main():
 	people = getData()
