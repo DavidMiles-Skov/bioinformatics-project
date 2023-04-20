@@ -10,8 +10,6 @@ Tall and short are above and below those limits respectively
 
 Notes;
 Using some of the same coding from ex7
-Average height can be changed
-Havent made the formatting witb a "main()"
 Output needs better formatting
 directory needs fixing to github direct
 Extra note:
@@ -19,13 +17,11 @@ It seems like the somewhat randomization of the dataset has made the average hei
 So maybe there should not be any differentiation between men and women in terms of what is consiudered tall
 """
 
-def height_comparison_of_parents():
+def height_comparison_of_parents(people):
 	"""Counting number of tall/tall, tall/normal, tall/short, normal/normal, 
 	normal/short and short/short parent pairs"""
 	
 	tall_tall, tall_normal, tall_short, normal_normal, normal_short, short_short = 0, 0, 0, 0, 0, 0
-	
-	people = getData()
 
 	encountered_parents = list()
 
@@ -69,4 +65,9 @@ def height_comparison_of_parents():
 
 	return str((tall_tall/total)*100), (tall_normal/total)*100, (tall_short/total)*100, (normal_normal/total)*100, (normal_short/total)*100, (short_short/total)*100				
 
-#print(height_comparison_of_parents())
+def main():
+	people = getData()
+	height_comparison_of_parents(people)
+
+if __name__ == "__main()__":
+	main()
