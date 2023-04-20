@@ -14,6 +14,7 @@ directory needs fixing to github direct
 Extra note:
 It seems like the somewhat randomization of the dataset has made the average height of women a lot higher than whats typical,
 So maybe there should not be any differentiation between men and women in terms of what is consiudered tall
+This also explains why there are such few normal/normal couples, as the amount of normal height women is very low
 """
 
 def height_comparison_of_parents(people):
