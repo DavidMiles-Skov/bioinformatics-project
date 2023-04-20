@@ -7,7 +7,6 @@ Attempting to solve exercise 14:
 A BMI below 18.5 is considered thin, 18.5-25 normal, and 25+ overweight (fat)
 
 Notes:
-havent made the "main()" formatting
 output needs to be cleaned up so you can tell what percentage is what
 Directory needs to be fixed
 The BMI calculation could be added as a method for the person class,
