@@ -14,6 +14,9 @@ Average height can be changed
 Havent made the formatting witb a "main()"
 Output needs better formatting
 directory needs fixing to github direct
+Extra note:
+It seems like the somewhat randomization of the dataset has made the average height of women a lot higher than whats typical,
+So maybe there should not be any differentiation between men and women in terms of what is consiudered tall
 """
 
 def height_comparison_of_parents():
