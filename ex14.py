@@ -14,13 +14,11 @@ The BMI calculation could be added as a method for the person class,
 that way we could skip it here, should be simple since every person has a weight and height already
 """
 
-def BMI_of_parents():
+def BMI_of_parents(people):
 	"""Counting number of fat/fat, fat/normal, fat/thin, normal/normal, 
 	normal/thin and thin/thin parent pairs"""
 	
 	fat_fat, fat_normal, fat_thin, normal_normal, normal_thin, thin_thin = 0, 0, 0, 0, 0, 0
-	
-	people = getData()
 
 	encountered_parents = list()
 
@@ -62,4 +60,9 @@ def BMI_of_parents():
 
 	return str((fat_fat/total)*100), (fat_normal/total)*100, (fat_thin/total)*100, (normal_normal/total)*100, (normal_thin/total)*100, (thin_thin/total)*100				
 
-#print(BMI_of_parents())
+def main:
+	people = getData()
+	BMI_of_parents(people)
+
+if __name__ == "__main()__":
+	main()
