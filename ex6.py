@@ -34,7 +34,7 @@ def Parenthood_percentage(people):                          #Needs to be updated
 
 def main():
 	people = getData()
-	Parenthood_percentage()
+	Parenthood_percentage(people)
 
 if __name__ == "__main()__":
 	main()
