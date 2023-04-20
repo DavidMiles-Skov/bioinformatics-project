@@ -8,7 +8,6 @@ Tall is considered above 184.4 cm for men and above 170.2 for women
 Notes:
 Same as in ex12, Ive realied the height for women on average is very tall compared to denmark statistics
 Maybe we should not differentiate between them in that case
-Formatting needs with with the "main()"
 Output can be cleaned up
 
 """
