@@ -7,7 +7,7 @@ Using the inheritance chart from https://canadiancrc.com/paternity_determination
 Notes:
 As far as i could read the rhesus +/- system is inherited seperately from the ABO-system, so I've only based it on the ABO-system
 Directory needs fixing
-Output needs fixing
+Output can be improved, atm its just a list of the childrens CPR numbers
 
 """
 
