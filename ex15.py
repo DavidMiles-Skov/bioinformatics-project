@@ -8,7 +8,6 @@ Notes:
 Directory needs fixing
 Output needs fixing
 "main()" formatting not implemented yet*
-The part making the father always p1 is actually irrelevant since it doesnt matter for inheritance
 
 """
 
@@ -25,14 +24,10 @@ def not_the_parents():
 	for cpr, person in people.items():
 
 		parents = person.Parents
+		
 		if parents != []:
-		#Making it so the father is always defined as p1
-			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
-				p1 = people[parents[1]]
-				p2 = people[parents[0]]
-			elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
-				p1 = people[parents[0]]
-				p2 = people[parents[1]]
+			p1 = people[parents[0]]
+			p2 = people[parents[1]]
 
 			pbloodtype = (p2.BloodType[:-1], p1.BloodType[:-1])                 #Parents blood types, mother's first
 			cbloodtype = person.BloodType[:-1]                                  #Person's blood type
@@ -41,4 +36,4 @@ def not_the_parents():
 
 	return kids
 
-print(not_the_parents())
+#print(not_the_parents())
