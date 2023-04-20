@@ -63,7 +63,7 @@ def height_comparison_of_parents(people):
 	total = tall_tall + tall_normal + tall_short + normal_normal + normal_short + short_short
 
 
-	return str((tall_tall/total)*100), (tall_normal/total)*100, (tall_short/total)*100, (normal_normal/total)*100, (normal_short/total)*100, (short_short/total)*100				
+	print("Heights\t\tPercentage" + "\nTall/tall\t"+str((tall_tall/total)*100)+"%", "\nTall/normal\t"+str((tall_normal/total)*100), "\nTall/short\t"+str((tall_short/total)*100), "\nNormal/normal\t"+str((normal_normal/total)*100), "\nNormal/short\t"+str((normal_short/total)*100), "\nShort/short\t"+str((short_short/total)*100))			
 
 def main():
 	people = getData()
