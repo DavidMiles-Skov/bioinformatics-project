@@ -8,7 +8,6 @@ Notes:
 As far as i could read the rhesus +/- system is inherited seperately from the ABO-system, so I've only based it on the ABO-system
 Directory needs fixing
 Output needs fixing
-"main()" formatting not implemented yet*
 
 """
 
@@ -19,8 +18,6 @@ def not_the_parents():
 	inheritance = {("A", "A"): ("A", "O"), ("A","B"): ("A", "B", "AB", "O"), ("A", "AB"): ("A", "B", "AB"), ("A", "O"): ("A", "O"), ("B", "A"): ("A", "B", "AB", "O"), ("B", "B"): ("B", "O"), ("B", "AB"): ("A", "B", "AB"), ("B", "O"): ("B", "O"), ("AB", "A"): ("A", "B", "AB"), ("AB", "B"): ("A", "B", "AB"), ("AB", "AB"): ("A", "B", "AB"), ("AB", "O"): ("A", "B"), ("O", "A"): ("A", "O"), ("O", "B"): ("B", "O"), ("O", "AB"): ("A", "B"), ("O", "O"): ("O")}
 
 	kids = []
-
-	people = getData()
 
 	for cpr, person in people.items():
 
@@ -37,4 +34,9 @@ def not_the_parents():
 
 	return kids
 
-#print(not_the_parents())
+def main():
+	people = getData()
+	not_the_parents(people)
+
+if __name__ == "__main()__":
+	main()
