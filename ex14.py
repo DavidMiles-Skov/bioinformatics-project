@@ -57,7 +57,7 @@ def BMI_of_parents(people):
 	total = fat_fat + fat_normal + fat_thin + normal_normal + normal_thin + thin_thin
 
 
-	return str((fat_fat/total)*100), (fat_normal/total)*100, (fat_thin/total)*100, (normal_normal/total)*100, (normal_thin/total)*100, (thin_thin/total)*100				
+	print("BMI\t\tPercentage" + "\nFat/fat\t\t"+str((fat_fat/total)*100)+"%", "\nFat/normal\t"+str((fat_normal/total)*100)+"%", "\nFat/thin\t"+str((fat_thin/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/thin\t"+str((normal_thin/total)*100)+"%", "\nThin/thin\t"+str((thin_thin/total)*100)+"%")				
 
 def main:
 	people = getData()
