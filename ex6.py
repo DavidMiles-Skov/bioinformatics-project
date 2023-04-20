@@ -10,10 +10,9 @@ Attempting to solve exercise 6:
 
 """
 
-def Parenthood_percentage():                          #Needs to be updated to the proper path, this was just made from own directory
+def Parenthood_percentage(people):                          #Needs to be updated to the proper path, this was just made from own directory
 	"""Percentage of males and females who are not parents"""
 	males, females = [], []
-	people = getData()
 
 
 	for person in people.values():                                                                 #Iterating over the person class values in the getData dict
@@ -33,4 +32,9 @@ def Parenthood_percentage():                          #Needs to be updated to th
 
 	return "Percentage of non fathers: " + str((Non_fathers/Number_of_males)*100), "percentage of non mothers: " + str((Non_mothers/Number_of_females)*100)
 
-#print(Parenthood_percentage())
+def main():
+	people = getData()
+	Parenthood_percentage()
+
+if __name__ == "__main()__":
+	main()
