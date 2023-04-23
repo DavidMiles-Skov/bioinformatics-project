@@ -70,5 +70,5 @@ def main():
 	people = getData()
 	height_comparison_of_parents(people)
 
-if __name__ == "__main__":
+if __name__ == "__main()__":
 	main()

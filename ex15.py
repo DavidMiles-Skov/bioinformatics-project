@@ -38,5 +38,5 @@ def main():
 	people = getData()
 	not_the_parents(people)
 
-if __name__ == "__main()__":
+if __name__ == "__main__":
 	main()

@@ -112,6 +112,10 @@ class Person():
 
     def getParents(self):
         return self.Parents
+    
+    def getBMI(self):
+        h_metres = self.Height/100
+        return (self.Weight/(h_metres**2))
         
     
     def __str__(self):

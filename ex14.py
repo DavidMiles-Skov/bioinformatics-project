@@ -29,8 +29,8 @@ def BMI_of_parents(people):
 
 		if parents != [] and parents not in encountered_parents:
 
-				p1 = people[parents[1]]
-				p2 = people[parents[0]]
+			p1 = people[parents[1]]
+			p2 = people[parents[0]]
 
 
 			h1, h2 = int(p1.Height), int(p2.Height)
@@ -59,9 +59,9 @@ def BMI_of_parents(people):
 
 	print("BMI\t\tPercentage" + "\nFat/fat\t\t"+str((fat_fat/total)*100)+"%", "\nFat/normal\t"+str((fat_normal/total)*100)+"%", "\nFat/thin\t"+str((fat_thin/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/thin\t"+str((normal_thin/total)*100)+"%", "\nThin/thin\t"+str((thin_thin/total)*100)+"%")				
 
-def main:
+def main():
 	people = getData()
 	BMI_of_parents(people)
 
-if __name__ == "__main()__":
+if __name__ == "__main__":
 	main()

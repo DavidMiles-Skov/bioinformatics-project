@@ -53,5 +53,5 @@ def main():
 	people = getData()
 	children_heights(people)
 
-if __name__ == "__main()__":
+if __name__ == "__main__":
 	main()
