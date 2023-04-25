@@ -32,7 +32,8 @@ def not_the_parents(people):
 			if cbloodtype not in inheritance[pbloodtype]:
 				kids.append(person)
 
-	return kids
+	print("Children, where at least 1 parent is not their biological parent:\n")
+	print(kids)
 
 def main():
 	people = getData()

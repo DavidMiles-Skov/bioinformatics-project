@@ -49,7 +49,63 @@ def main():
         if num==3:
 
             calcAveFirstTimeFatherAge(people)
+
+        if num==4:
+            
+            firstTimeMotherAge(people)
         
+        if num==5:
+            
+            calcAveFirstTimeMotherAge(people)
+
+        if num==6:
+
+            Parenthood_percentage(people)
+
+        if num==7:
+
+            calcParentAgeDiff(people)
+
+        if num==8:
+
+            findGrandParents(people)
+
+        if num==9:
+
+            findAveCousins(people)
+        
+        if num==10:
+
+            firstBornGender(people)
+
+        if num==11:
+
+            parentsIn2Families(people)
+
+        if num==12:
+
+            height_comparison_of_parents(people)
+
+        if num==13:
+
+            children_heights(people)
+
+        if num==14:
+
+            BMI_of_parents(people)
+        
+        if num==15:
+
+            not_the_parents(people)
+        
+        if num==16:
+
+            fathersBloodDonateToSons(people)
+        
+        if num==17:
+
+            personCanDonateBloodToGrandparents(people)
+
         if num==18:
         
             exit()

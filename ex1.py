@@ -63,8 +63,6 @@ def calcAgeDistDKData(filepath=r"data\DKpopulation.csv"):
     return male_prop, female_prop
     
 
-
-
 def calcAgeDistTest(people):
     """
     Calculates the age distribution of the test data
@@ -100,18 +98,10 @@ def calcAgeDistTest(people):
     female_prop = {agerange: round((num/total_female)*100, 2) for agerange, num in female_ages.items()}
     
     return male_prop, female_prop
-        
 
-
-
-
-def main():
-
-    people = getData()
-
-
+def ageAndGenderDist(people):
+    
     m_ages_test, f_ages_test = calcAgeDistTest(people)
-
     m_ages_data, f_ages_data = calcAgeDistDKData()
 
     print("------Comparing age and gender distributions------")
@@ -122,5 +112,22 @@ def main():
     
 
 
-if __name__=="__main__":
-    main()
+# def main():
+
+#     people = getData()
+
+
+#     m_ages_test, f_ages_test = calcAgeDistTest(people)
+
+#     m_ages_data, f_ages_data = calcAgeDistDKData()
+
+#     print("------Comparing age and gender distributions------")
+#     print("Age range:\nGender: people.db\tDKpopulation.csv:\n")
+    
+#     for ages in m_ages_test.keys():
+#         print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}")
+    
+
+
+# if __name__=="__main__":
+#     main()
