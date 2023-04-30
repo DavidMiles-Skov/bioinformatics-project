@@ -17,7 +17,7 @@ def getInput():
 12. Analysis of height differences between couples.
 13. Do tall parents have tall children?
 14. Analysis on BMI differences between couples.
-15. Number of children being raises by non-biological parent (via bloodtype analysis).
+15. Number of children being raised by non-biological parent (via bloodtype analysis).
 16. Fathers that can donate blood to their sons.
 17. People that can donate blood to at least one of their grandparents.
 18. Exit Program.""")
@@ -32,6 +32,13 @@ def main():
     
     # Setting up main data structure 
     
+    print("""Course: 22113 - Unix & Python Programming for Bioinformaticians
+
+Project 5 - Data Analysis
+
+Authors: Rolf Larsen and David Miles-Skov
+""")
+
     people = getData()
     num = getInput()
 
