@@ -5,9 +5,8 @@ Attempting to solve exercise 15:
 Using the inheritance chart from https://canadiancrc.com/paternity_determination_blood_type.aspx 
 
 Notes:
-As far as i could read the rhesus +/- system is inherited seperately from the ABO-system, so I've only based it on the ABO-system
 Directory needs fixing
-Output can be improved, atm its just a list of the childrens CPR numbers
+Output can be improved
 
 """
 
@@ -21,14 +20,12 @@ def not_the_parents(people):
 
 	for cpr, person in people.items():
 
-		parents = person.Parents
-		
-		if parents != []:
-			p1 = people[parents[0]]
-			p2 = people[parents[1]]
+		if person.getParents() != []:
+			p1, p2 = people[person.getParents()[0]], people[person.getParents()[1]]
+			
 
-			pbloodtype = (p2.BloodType[:-1], p1.BloodType[:-1])                 #Parents blood types, mother's first
-			cbloodtype = person.BloodType[:-1]                                  #Person's blood type
+			pbloodtype = (p1.getBloodType()[:-1], p2.getBloodType()[:-1])                 #Parents blood types
+			cbloodtype = person.getBloodType()[:-1]                                       #Person's blood type
 			if cbloodtype not in inheritance[pbloodtype]:
 				kids.append(person)
 
