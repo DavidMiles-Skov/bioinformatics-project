@@ -7,10 +7,7 @@ Attempting to solve exercise 14:
 A BMI below 18.5 is considered thin, 18.5-25 normal, and 25+ overweight (fat)
 
 Notes:
-Output code wise is a bit yikes, not very familiar with string formatting, perhaps you have a better solution
 Directory needs to be fixed
-The BMI calculation could be added as a method for the person class,
-that way we could skip it here, should be simple since every person has a weight and height already
 """
 
 def BMI_of_parents(people):
@@ -24,33 +21,29 @@ def BMI_of_parents(people):
 	for cpr, person in people.items():
 
 
-		parents = person.Parents
+		parents = person.getParents()
 
 
-		if parents != [] and parents not in encountered_parents:
+		if person.getParents() != [] and parents not in encountered_parents:
 
-			p1 = people[parents[1]]
-			p2 = people[parents[0]]
+			p1, p2 = people[person.getParents()[0]], people[person.getParents()[1]]
 
+			p1_bmi, p2_bmi = p1.getBMI(), p2.getBMI()
 
-			h1, h2 = int(p1.Height), int(p2.Height)
-			w1, w2 = int(p1.Weight), int(p2.Weight)
-			p1_bmi, p2_bmi = w1/((h1/100)*(h1/100)), w2/((h2/100)*(h2/100))
-
-			#fat men
-			if p1_bmi > 25 and p2_bmi > 25: fat_fat += 1                                  #fat women
-			elif p1_bmi > 25 and p2_bmi <= 25 and p2_bmi >= 18.5: fat_normal += 1         #normal women
-			elif p1_bmi > 25 and p2_bmi < 18.5: fat_thin += 1                             #thin women
+			#fat 1st parent
+			if p1_bmi > 25 and p2_bmi > 25: fat_fat += 1                                  #fat
+			elif p1_bmi > 25 and p2_bmi <= 25 and p2_bmi >= 18.5: fat_normal += 1         #normal
+			elif p1_bmi > 25 and p2_bmi < 18.5: fat_thin += 1                             #thin
 			
-			#normal men
-			elif p1_bmi <= 25 and p1_bmi >= 18.5 and p2_bmi > 25: fat_normal += 1                                    #fat women
-			elif p1_bmi <= 25 and p1_bmi >= 18.5 and p2_bmi <= 25 and p2_bmi >= 18.5: normal_normal += 1             #normal women
-			elif p1_bmi <= 25 and p1_bmi >= 18.5 and p2_bmi < 18.5: normal_thin += 1                                 #thin women
+			#normal 1st parent
+			elif p1_bmi <= 25 and p1_bmi >= 18.5 and p2_bmi > 25: fat_normal += 1                                    #fat
+			elif p1_bmi <= 25 and p1_bmi >= 18.5 and p2_bmi <= 25 and p2_bmi >= 18.5: normal_normal += 1             #normal
+			elif p1_bmi <= 25 and p1_bmi >= 18.5 and p2_bmi < 18.5: normal_thin += 1                                 #thin
 			
-			#thin men
-			elif p1_bmi < 18.5 and p2_bmi > 25: fat_thin += 1                                 #fat women
-			elif p1_bmi < 18.5 and p2_bmi <= 25 and p2_bmi >= 18.5: normal_thin += 1          #normal women
-			elif p1_bmi < 18.5 and p2_bmi < 18.5: thin_thin += 1                              #thin women
+			#thin 1st parent
+			elif p1_bmi < 18.5 and p2_bmi > 25: fat_thin += 1                                 #fat
+			elif p1_bmi < 18.5 and p2_bmi <= 25 and p2_bmi >= 18.5: normal_thin += 1          #normal
+			elif p1_bmi < 18.5 and p2_bmi < 18.5: thin_thin += 1                              #thin
 
 			encountered_parents.append(parents)
 
