@@ -13,14 +13,13 @@ Attempting to solve exercise 6:
 def Parenthood_percentage(people):                          #Needs to be updated to the proper path, this was just made from own directory
 	"""Percentage of males and females who are not parents"""
 	males, females = [], []
-
-
+	
 	for person in people.values():                                                                 #Iterating over the person class values in the getData dict
 		#"1" means they have children, "0" means they do not have children
-		if person.Gender == "Male" and len(person.Children) != 0: males.append("1")          
-		elif person.Gender == "Male" and len(person.Children) == 0: males.append("0")
-		if person.Gender == "Female" and len(person.Children) != 0: females.append("1")
-		elif person.Gender == "Female" and len(person.Children) == 0: females.append("0")
+		if person.getGender() == "Male" and len(person.getChildren()) != 0: males.append("1")          
+		elif person.getGender() == "Male" and len(person.getChildren()) == 0: males.append("0")
+		elif person.getGender() == "Female" and len(person.getChildren()) != 0: females.append("1")
+		elif person.getGender() == "Female" and len(person.getChildren()) == 0: females.append("0")
 
 
 	Number_of_males = len(males)
