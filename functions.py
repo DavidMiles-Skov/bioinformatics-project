@@ -81,14 +81,14 @@ def calcAgeDistTest(people):
                 "41-45": 0,
                 "46+": 0 }
 
-    for cpr, person in zip(people.keys(), people.values()):
+    for cpr, person in zip(people.keys(), people.values()): # O(x)
         age = 100-int(cpr[4:6])
 
-        if person.Gender=="Male": male_ages = addAgeToDict(age, male_ages)
+        if person.Gender=="Male": male_ages = addAgeToDict(age, male_ages) # O(1)
         else: female_ages = addAgeToDict(age, female_ages)
     
-    total_male = sum(male_ages.values())
-    total_female = sum(female_ages.values())
+    total_male = sum(male_ages.values()) # O(x)
+    total_female = sum(female_ages.values()) # O(x)
 
     # Converting from numbers to percentages
 
@@ -97,6 +97,7 @@ def calcAgeDistTest(people):
     
     return male_prop, female_prop
 
+# Overall: O(x)
 
 # Final function 
 
@@ -108,7 +109,7 @@ def ageAndGenderDist(people):
     print("------Comparing age and gender distributions------")
     print("Age range:\nGender:\npeople.db\tDKpopulation.csv:\n")
     
-    for ages in m_ages_test.keys():
+    for ages in m_ages_test.keys(): # O(x)
         print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}")
 
 ########################################################################
@@ -125,13 +126,13 @@ def firstTimeFatherAge(persondict):
     """
     ages = []
 
-    for person in persondict.values():
+    for person in persondict.values(): # O(x)
         if person.Children != [] and person.Gender=="Male":
             yFather = int(person.CPR[4:6])
             # Finding the eldest child
-            eldest = min([int(x[4:6]) for x in person.Children])
+            eldest = min([int(x[4:6]) for x in person.Children]) # O(c)
             ages.append(eldest-yFather)
-    ages.sort()
+    ages.sort() # O(log(x))
     counter = Counter(ages)
     age_vals = [i for i in counter.keys()]
     prop = [i/len(ages) for i in counter.values()]
@@ -158,7 +159,7 @@ def calcAveFirstTimeFatherAge(persondict):
         if person.Children != [] and person.Gender=="Male":
             yFather = int(person.CPR[4:6])
             # Finding the eldest child
-            eldest = min([int(x[4:6]) for x in person.Children])
+            eldest = min([int(x[4:6]) for x in person.Children]) # O(c)
             ages.append(eldest-yFather)
     x = 31.3 # Average age of first-time fathers in denmark according to statistics denmark
     print("--------------Comparison of mean age of first-time fatherhood----------------")
@@ -225,7 +226,7 @@ def Parenthood_percentage(people):                          #Needs to be updated
 	males, females = [], []
 
 
-	for person in people.values():                                                                 #Iterating over the person class values in the getData dict
+	for person in people.values(): # O(x)                                                                #Iterating over the person class values in the getData dict
 		#"1" means they have children, "0" means they do not have children
 		if person.Gender == "Male" and len(person.Children) != 0: males.append("1")          
 		elif person.Gender == "Male" and len(person.Children) == 0: males.append("0")
@@ -238,7 +239,7 @@ def Parenthood_percentage(people):                          #Needs to be updated
 
 
 	Non_fathers = males.count("0")
-	Non_mothers = females.count("0")
+	Non_mothers = females.count("0") # O(x)
 
 	return "Percentage of non fathers: " + str((Non_fathers/Number_of_males)*100), "percentage of non mothers: " + str((Non_mothers/Number_of_females)*100)
 
@@ -252,13 +253,13 @@ def calcParentAgeDiff(people):
     encountered_children = set()
     differences = []
     
-    for cpr, person in people.items():
+    for cpr, person in people.items(): # O(x)
         
 
         parents = person.Parents
 
 
-        if parents != [] and cpr not in encountered_children:
+        if parents != [] and cpr not in encountered_children: # O(c)
         
             p1 = people[parents[0]]
             p2 = people[parents[1]]
@@ -280,14 +281,16 @@ def calcParentAgeDiff(people):
 def findGrandParents(people):
 
     num_people_w_grandparents = 0
+    encountered_people = set()
 
-    for cpr, person in people.items():
-        
-        if person.Parents != []: 
-            for parent_cpr in person.Parents:
+    for cpr, person in people.items(): # O(x)
+        encountered_people.add(cpr)
+        if person.getParents() != []: 
+            for parent_cpr in person.getParents(): # O(p)
                 parent = people[parent_cpr]
-                if parent.Parents!=[]:
+                if parent.Parents!=[] and cpr not in encountered_people # O(m):
                     num_people_w_grandparents+=1
+                    
     print(len(people.keys()))
     print(f"{num_people_w_grandparents} people have a living grandparent, corresponding to {round(num_people_w_grandparents/len(people.keys()),2)*100}% of the data")
 
