@@ -288,7 +288,7 @@ def findGrandParents(people):
         if person.getParents() != []: 
             for parent_cpr in person.getParents(): # O(p)
                 parent = people[parent_cpr]
-                if parent.Parents!=[] and cpr not in encountered_people # O(m):
+                if parent.Parents!=[] and cpr not in encountered_people: # O(m)
                     num_people_w_grandparents+=1
                     
     print(len(people.keys()))
@@ -316,18 +316,18 @@ def findAveCousins(dict):
     num_cousins = []
     considered_grandparents = set()
 
-    for cpr,grandparent in dict.items():
-        if grandparent.Children !=[] and cpr not in considered_grandparents: # Person has children and family has not already been considered
+    for cpr,grandparent in dict.items(): # O(x)
+        if grandparent.Children !=[] and cpr not in considered_grandparents: # Person has children and family that has not already been considered
             # Finding person's partner
-            c1 = dict[grandparent.Children[0]]
+            c1 = dict[grandparent.Children[0]] 
             partner = [i for i in c1.Parents if i != cpr][0]
             # Adding grandparents to set
             considered_grandparents.add(cpr)
             considered_grandparents.add(partner)
-            parent_cprs = grandparent.Children
+            parent_cprs = grandparent.getChildren()
             cousins = 0
-            for p_cpr in parent_cprs: # iterating through parents 
-                cousins += len(dict[p_cpr].Children) # Summing up number of cousings
+            for p_cpr in parent_cprs: # iterating through parents, O(p)
+                cousins += len(dict[p_cpr].getChildren()) # Summing up number of cousings: Number of children each sibling has
             num_cousins.append(cousins)
     return f"Average number of cousins: {sum(num_cousins)/len(num_cousins)}"
 
@@ -353,12 +353,12 @@ def firstBornGender(people):
     encountered_parents = set()
 
 
-    for cpr, person in people.items():
+    for cpr, person in people.items(): # O(x) x = people
         
-        if person.getChildren()!=[] and cpr not in encountered_parents:
+        if person.getChildren()!=[] and cpr not in encountered_parents: # O(s) s = set
             
             children_cprs = person.getChildren()
-            children_cprs.sort(key=lambda x: (x[4:6], x[2:4], x[:2])) # Using lambda function to sort by birth year
+            children_cprs.sort(key=lambda x: (x[4:6], x[2:4], x[:2])) # Using lambda function to sort by birth year. # O(c) c = children
             firstborncpr=children_cprs[0]
             
             if people[firstborncpr].getGender()=="Male":
@@ -370,7 +370,7 @@ def firstBornGender(people):
             
             # Find other parent
             
-            otherparent=[i for i in people[firstborncpr].getParents() if i != cpr][0]
+            otherparent=[i for i in people[firstborncpr].getParents() if i != cpr][0] # O(2) max.
             encountered_parents.add(otherparent)
     
     return f"Gender:\tPercentage firstborn:\nMale:\t{round(100*m_firstborn/(m_firstborn+f_firstborn),2)}%\nFemale:\t{round(100*f_firstborn/(m_firstborn+f_firstborn),2)}%"
@@ -385,7 +385,7 @@ def parentsIn2Families(people):
     parents = set()
     rec = 0
 
-    for cpr, person in people.items():
+    for _, person in people.items(): # O(x)
         
         if person.getParents()!=[]:
             
@@ -398,14 +398,14 @@ def parentsIn2Families(people):
     num_parents = len(list(parents))
     encountered = set() # Records parents encountered twice. We do not want people who have children with 3 or more people to be included in rec more than once
 
-    for couple in couples:
+    for couple in couples: # O(m)
         
         p1, p2 = couple[0], couple[1]
         
-        if p1 not in parents and p1 not in encountered:
+        if p1 not in parents and p1 not in encountered: # O(l)
             rec += 1
             encountered.add(p1) # Record that the parent has been encountered, and should not further contribute to the percentage
-        if p2 not in parents and p2 not in encountered:
+        if p2 not in parents and p2 not in encountered: # O(l)
             rec += 1
             encountered.add(p2)
 
@@ -416,57 +416,59 @@ def parentsIn2Families(people):
 
     print(f"Percentage of people having children with 2 or more people: {x}%")
 
+
+# Overall time complexity: O(m*(l+l)) = O(m*2*l) ~ O(m*l), where m is the number of couples found in the database and l is the number of 
+
 ##########################################################################
 
 ######################### Functions for exercise 12 #########################
 
-def height_comparison_of_parents(people):
-	"""Counting number of tall/tall, tall/normal, tall/short, normal/normal, 
-	normal/short and short/short parent pairs"""
-	
-	tall_tall, tall_normal, tall_short, normal_normal, normal_short, short_short = 0, 0, 0, 0, 0, 0
+# def height_comparison_of_parents(people):
+# 	"""Counting number of tall/tall, tall/normal, tall/short, normal/normal, 
+# 	normal/short and short/short parent pairs"""
+#     tall_tall, tall_normal, tall_short, normal_normal, normal_short, short_short = 0, 0, 0, 0, 0, 0
 
-	encountered_parents = list()
+#     encountered_parents = list()
+    
+#     for _, person in people.items():
+        
+#         parents = person.getParents()
+        
+#         if parents != [] and parents[0] not in encountered_parents and parents[1] not in encountered_parents:
 
-	for cpr, person in people.items():
+#             #Making it so the father is always defined as p1
+#             if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
+#                 p1 = people[parents[1]]
+#                 p2 = people[parents[0]]
+#             elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
+#                 p1 = people[parents[0]]
+#                 p2 = people[parents[1]]
 
+#             h1, h2 = int(p1.getHeight()), int(p2.getHeight())
 
-		parents = person.Parents
+#             #Tall men
+#             if h1 > 184.4 and h2 > 170.2: tall_tall += 1                                #tall women
+#             elif h1 > 184.4 and h2 <= 170.2 and h2 >= 164.2: tall_normal += 1           #normal women
+#             elif h1 > 184.4 and h2 < 164.2: tall_short += 1                             #short women
 
+#             #Average men
+#             elif h1 <= 184.4 and h1 >= 178.4 and h2 > 170.2: tall_normal += 1                                #tall women
+#             elif h1 <= 184.4 and h1 >= 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_normal += 1             #normal women
+#             elif h1 <= 184.4 and h1 >= 178.4 and h2 < 164.2: normal_short += 1                               #short women
 
-		if parents != [] and parents not in encountered_parents:
+#             #Short men
+#             elif h1 < 178.4 and h2 > 170.2: tall_short += 1                             #tall women
+#             elif h1 < 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_short += 1          #normal women
+#             elif h1 < 178.4 and h2 < 164.2: short_short += 1                            #short women
 
-			#Making it so the father is always defined as p1
-			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
-				p1 = people[parents[1]]
-				p2 = people[parents[0]]
-			elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
-				p1 = people[parents[0]]
-				p2 = people[parents[1]]
-
-			h1, h2 = int(p1.Height), int(p2.Height)
-			
-			#Tall men
-			if h1 > 184.4 and h2 > 170.2: tall_tall += 1                                #tall women
-			elif h1 > 184.4 and h2 <= 170.2 and h2 >= 164.2: tall_normal += 1           #normal women
-			elif h1 > 184.4 and h2 < 164.2: tall_short += 1                             #short women
-			
-			#Average men
-			elif h1 <= 184.4 and h1 >= 178.4 and h2 > 170.2: tall_normal += 1                                #tall women
-			elif h1 <= 184.4 and h1 >= 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_normal += 1             #normal women
-			elif h1 <= 184.4 and h1 >= 178.4 and h2 < 164.2: normal_short += 1                               #short women
-			
-			#Short men
-			elif h1 < 178.4 and h2 > 170.2: tall_short += 1                             #tall women
-			elif h1 < 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_short += 1          #normal women
-			elif h1 < 178.4 and h2 < 164.2: short_short += 1                            #short women
-
-			encountered_parents.append(parents)
-
-	total = tall_tall + tall_normal + tall_short + normal_normal + normal_short + short_short
+#             encountered_parents.add(parents[0])
+#             encountered_parents.add(parents[1])
 
 
-	print("Heights\t\tPercentage" + "\nTall/tall\t"+str((tall_tall/total)*100)+"%", "\nTall/normal\t"+str((tall_normal/total)*100)+"%", "\nTall/short\t"+str((tall_short/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/short\t"+str((normal_short/total)*100)+"%", "\nShort/short\t"+str((short_short/total)*100)+"%")			
+# 	total = tall_tall + tall_normal + tall_short + normal_normal + normal_short + short_short
+
+
+# 	print("Heights\t\tPercentage" + "\nTall/tall\t"+str((tall_tall/total)*100)+"%", "\nTall/normal\t"+str((tall_normal/total)*100)+"%", "\nTall/short\t"+str((tall_short/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/short\t"+str((normal_short/total)*100)+"%", "\nShort/short\t"+str((short_short/total)*100)+"%")			
 
 ##########################################################################
 
@@ -477,31 +479,31 @@ def children_heights(people):
 	girls, boys = [], []
 	tall, normal, short = 0,0,0
 
-	for cpr, person in people.items():
+	for _, person in people.items(): # O(x)
 
-		parents = person.Parents
+		parents = person.getParents()
 
 		if parents != []:
 			#Making it so the father is always defined as p1
-			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
+			if (int(people[parents[0]].getCPR()[9:11]) % 2) == 0:
 				p1 = people[parents[1]]
 				p2 = people[parents[0]]
-			elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
+			elif (int(people[parents[0]].getCPR()[9:11]) % 2) != 0:
 				p1 = people[parents[0]]
 				p2 = people[parents[1]]
 
 			#If both parenst are tall
-			if p1.Height > 184.4 and p2.Height > 170.2:
-				if (int(person.CPR[9:11]) % 2) == 0: girls.append(person.Height)                  #girls
+			if p1.getHeight() > 184.4 and p2.getHeight() > 170.2:
+				if (int(person.getCPR()[9:11]) % 2) == 0: girls.append(person.getHeight())                  #girls
 
-				elif (int(person.CPR[9:11]) % 2) != 0: boys.append(person.Height)                 #boys
+				elif (int(person.getCPR()[9:11]) % 2) != 0: boys.append(person.getHeight())                 #boys
 
-	for boy in boys:
+	for boy in boys: # O(b)
 		if boy > 184.4: tall += 1
 		elif boy <= 184.4 and boy >= 178.4: normal += 1
 		if boy < 178.4: short += 1
 
-	for girl in girls:
+	for girl in girls: # O(g)
 		if girl > 170.2: tall += 1
 		elif girl <= 170.2 and girl >= 164.2: normal += 1
 		if girl < 164.2: short += 1
@@ -520,15 +522,15 @@ def BMI_of_parents(people):
 	
 	fat_fat, fat_normal, fat_thin, normal_normal, normal_thin, thin_thin = 0, 0, 0, 0, 0, 0
 
-	encountered_parents = list()
+	encountered_parents = list() 
 
-	for cpr, person in people.items():
+	for _, person in people.items(): # O(x)
 
 
 		parents = person.Parents
 
 
-		if parents != [] and parents not in encountered_parents:
+		if parents != [] and parents not in encountered_parents: # O(l)
 
 			p1 = people[parents[1]]
 			p2 = people[parents[0]]
@@ -571,17 +573,17 @@ def not_the_parents(people):
 
 	kids = []
 
-	for cpr, person in people.items():
+	for _, person in people.items(): # O(x)
 
-		parents = person.Parents
+		parents = person.getParents()
 		
 		if parents != []:
 			p1 = people[parents[0]]
 			p2 = people[parents[1]]
 
-			pbloodtype = (p2.BloodType[:-1], p1.BloodType[:-1])                 #Parents blood types, mother's first
-			cbloodtype = person.BloodType[:-1]                                  #Person's blood type
-			if cbloodtype not in inheritance[pbloodtype]:
+			pbloodtype = (p2.getBloodType()[:-1], p1.getBloodType()[:-1])                 #Parents blood types, mother's first
+			cbloodtype = person.getBloodType()[:-1]                                  #Person's blood type
+			if cbloodtype not in inheritance[pbloodtype]: 
 				kids.append(person)
 
 	print("Children, where at least 1 parent is not their biological parent:\n")
@@ -608,15 +610,15 @@ def fathersBloodDonateToSons(people):
                 else pass
     """
     
-    father_cprs = [i for i,x in people.items() if x.getGender()=="Male" and len(x.getChildren())>0]
+    father_cprs = [i for i,x in people.items() if x.getGender()=="Male" and len(x.getChildren())>0] # O(x))
     fToSDonate = {}
 
-    for father_cpr in father_cprs:
+    for father_cpr in father_cprs: # O(l) ~ O(x)
         
         fToSDonate[father_cpr] = []
         father = people[father_cpr]
         
-        for child_cpr in father.getChildren():
+        for child_cpr in father.getChildren(): # O(c)
             
             child = people[child_cpr]
             
@@ -634,7 +636,7 @@ def personCanDonateBloodToGrandparents(people):
 
     person_to_grandparents = {}
 
-    for cpr, person in people.items():
+    for cpr, person in people.items(): # O(x)
         
         if person.getParents()!=[]:
 
@@ -646,15 +648,19 @@ def personCanDonateBloodToGrandparents(people):
 
     personToGrandparentsBlood = {}
 
-    for person, grandparents in person_to_grandparents.items():
+    for person, grandparents in person_to_grandparents.items(): # O(x)
         
     
-        x = [i for i in grandparents if canDonateTo(people[person].getBloodType(), people[i].getBloodType())]
+        x = [i for i in grandparents if canDonateTo(people[person].getBloodType(), people[i].getBloodType())] # O (g) ~ O(x)
         
         if x !=[]:
         
             personToGrandparentsBlood[person] = x
 
-    print(personToGrandparentsBlood)
+    s = ""
+    for person, grandparents in personToGrandparentsBlood.items():
+         s += f"Person {person} can donate to the following grandparents: {grandparents}\n"
+
+    print(s)
 
 ##########################################################################
