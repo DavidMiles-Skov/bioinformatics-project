@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from read_data import getData
 
 """
@@ -26,23 +24,23 @@ def height_comparison_of_parents(people):
 
 	encountered_parents = list()
 
-	for cpr, person in people.items():
+	for _, person in people.items():
 
 
-		parents = person.Parents
+		parents = person.getParents()
 
 
 		if parents != [] and parents not in encountered_parents:
 
 			#Making it so the father is always defined as p1
-			if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
+			if (int(people[parents[0]].getCPR()[9:11]) % 2) == 0:
 				p1 = people[parents[1]]
 				p2 = people[parents[0]]
-			elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
+			elif (int(people[parents[0]].getCPR()[9:11]) % 2) != 0:
 				p1 = people[parents[0]]
 				p2 = people[parents[1]]
 
-			h1, h2 = int(p1.Height), int(p2.Height)
+			h1, h2 = int(p1.getHeight()), int(p2.getHeight())
 			
 			#Tall men
 			if h1 > 184.4 and h2 > 170.2: tall_tall += 1                                #tall women
@@ -64,7 +62,7 @@ def height_comparison_of_parents(people):
 	total = tall_tall + tall_normal + tall_short + normal_normal + normal_short + short_short
 
 
-	print("Heights\t\tPercentage" + "\nTall/tall\t"+str((tall_tall/total)*100)+"%", "\nTall/normal\t"+str((tall_normal/total)*100)+"%", "\nTall/short\t"+str((tall_short/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/short\t"+str((normal_short/total)*100)+"%", "\nShort/short\t"+str((short_short/total)*100)+"%")			
+	print("Heights\t\tPercentage" + "\nTall/tall\t"+str(round((tall_tall/total)*100, 2))+"%"+"\nTall/normal\t"+str(round((tall_normal/total)*100, 2))+"%"+"\nTall/short\t"+str(round((tall_short/total)*100, 2))+"%"+"\nNormal/normal\t"+str(round((normal_normal/total)*100, 2))+"%"+"\nNormal/short\t"+str(round((normal_short/total)*100,2))+"%"+"\nShort/short\t"+str(round((short_short/total)*100,2))+"%")
 
 def main():
 	people = getData()

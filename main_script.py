@@ -47,47 +47,47 @@ Authors: Rolf Larsen and David Miles-Skov
         
         if num==1:
         
-            ageAndGenderDist(people)
+            age_gender_dist(people)
 
         if num==2:
 
-            firstTimeFatherAge(people)
+            first_time_father_age(people)
 
         if num==3:
 
-            calcAveFirstTimeFatherAge(people)
+            ave_first_time_father_age(people)
 
         if num==4:
             
-            firstTimeMotherAge(people)
+            first_time_mother_age(people)
         
         if num==5:
             
-            calcAveFirstTimeMotherAge(people)
+            ave_first_time_mother_age(people)
 
         if num==6:
 
-            Parenthood_percentage(people)
+            parenthood_percentage(people)
 
         if num==7:
 
-            calcParentAgeDiff(people)
+            ave_parent_age_diff(people)
 
         if num==8:
 
-            findGrandParents(people)
+            find_grandparents(people)
 
         if num==9:
 
-            findAveCousins(people)
+            find_num_ave_cousins(people)
         
         if num==10:
 
-            firstBornGender(people)
+            first_born_gender(people)
 
         if num==11:
 
-            parentsIn2Families(people)
+            parents_with_2_families(people)
 
         if num==12:
 
@@ -103,15 +103,15 @@ Authors: Rolf Larsen and David Miles-Skov
         
         if num==15:
 
-            not_the_parents(people)
+            not_biological_parent(people)
         
         if num==16:
 
-            fathersBloodDonateToSons(people)
+            fathers_that_can_donate_blood_to_sons(people)
         
         if num==17:
 
-            personCanDonateBloodToGrandparents(people)
+            can_donate_to_grandparents(people)
 
         if num==18:
         

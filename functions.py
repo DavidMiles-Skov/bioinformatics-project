@@ -7,7 +7,7 @@ from collections import Counter
 
 ######################## Functions for exercise 1 ########################
 
-def addAgeToDict(age, target_dict, amount=1):
+def add_age(age, target_dict, amount=1):
     if age>=16 and age<=20:
         target_dict["16-20"]+=amount
     elif age>=21 and age<=25:
@@ -24,7 +24,7 @@ def addAgeToDict(age, target_dict, amount=1):
         target_dict["46+"]+=amount
     return target_dict
         
-def calcAgeDistDKData(filepath=r"data\DKpopulation.csv"):
+def calc_age_dist_DK(filepath=r"data\DKpopulation.csv"):
     data = open(filepath, "r")
     male_ages = {"16-20": 0,
                 "21-25": 0,
@@ -47,8 +47,8 @@ def calcAgeDistDKData(filepath=r"data\DKpopulation.csv"):
         gender = l[2]
         amount=int(l[-1])
         
-        if gender=="Men": addAgeToDict(age, male_ages, amount=amount)
-        elif gender=="Women": addAgeToDict(age, female_ages, amount=amount)
+        if gender=="Men": add_age(age, male_ages, amount=amount)
+        elif gender=="Women": add_age(age, female_ages, amount=amount)
         else: raise Exception("Error in determining gender")
 
     total_male = sum(male_ages.values())
@@ -61,7 +61,7 @@ def calcAgeDistDKData(filepath=r"data\DKpopulation.csv"):
     
     return male_prop, female_prop
     
-def calcAgeDistTest(people):
+def calc_age_dist_DATA(people):
     """
     Calculates the age distribution of the test data
     
@@ -84,8 +84,8 @@ def calcAgeDistTest(people):
     for cpr, person in zip(people.keys(), people.values()): # O(x)
         age = 100-int(cpr[4:6])
 
-        if person.Gender=="Male": male_ages = addAgeToDict(age, male_ages) # O(1)
-        else: female_ages = addAgeToDict(age, female_ages)
+        if person.getGender()=="Male": male_ages = add_age(age, male_ages) # O(1)
+        else: female_ages = add_age(age, female_ages)
     
     total_male = sum(male_ages.values()) # O(x)
     total_female = sum(female_ages.values()) # O(x)
@@ -101,10 +101,10 @@ def calcAgeDistTest(people):
 
 # Final function 
 
-def ageAndGenderDist(people):
+def age_gender_dist(people):
     
-    m_ages_test, f_ages_test = calcAgeDistTest(people)
-    m_ages_data, f_ages_data = calcAgeDistDKData()
+    m_ages_test, f_ages_test = calc_age_dist_DATA(people)
+    m_ages_data, f_ages_data = calc_age_dist_DK()
 
     print("------Comparing age and gender distributions------")
     print("Age range:\nGender:\npeople.db\tDKpopulation.csv:\n")
@@ -117,20 +117,20 @@ def ageAndGenderDist(people):
 
 ######################## Functions for exercise 2 ########################
 
-def firstTimeFatherAge(persondict):
+def first_time_father_age(people):
     """
     Will calculate the age at which fathers have their first child.
     - Father: XXXXFF-XXXX
-    - Child: XXXXCC-XXXX
+    - Eldest Child: XXXXCC-XXXX
     - Age at fatherhood: CC-FF
     """
     ages = []
 
-    for person in persondict.values(): # O(x)
-        if person.Children != [] and person.Gender=="Male":
-            yFather = int(person.CPR[4:6])
+    for person in people.values(): # O(x)
+        if person.Children != [] and person.getGender()=="Male":
+            yFather = int(person.getCPR()[4:6])
             # Finding the eldest child
-            eldest = min([int(x[4:6]) for x in person.Children]) # O(c)
+            eldest = min([int(x[4:6]) for x in person.getChildren()]) # O(c)
             ages.append(eldest-yFather)
     ages.sort() # O(log(x))
     counter = Counter(ages)
@@ -139,6 +139,7 @@ def firstTimeFatherAge(persondict):
     plt.bar(age_vals, prop)
     plt.xlabel("Age of first-time fatherhood")
     plt.ylabel("Proportion")
+    plt.xticks(age_vals)
     plt.title("Distribution of ages of first-time fatherhood")
     plt.show()
 
@@ -146,7 +147,7 @@ def firstTimeFatherAge(persondict):
 
 ######################## Functions for exercise 3 ########################
 
-def calcAveFirstTimeFatherAge(persondict):
+def ave_first_time_father_age(people):
     """
     Will calculate the average age at which fathers have their first child.
     - Father: XXXXFF-XXXX
@@ -155,9 +156,9 @@ def calcAveFirstTimeFatherAge(persondict):
     """
     ages = []
 
-    for person in persondict.values():
-        if person.Children != [] and person.Gender=="Male":
-            yFather = int(person.CPR[4:6])
+    for person in people.values():
+        if person.getChildren() != [] and person.getGender()=="Male":
+            yFather = int(person.getCPR()[4:6])
             # Finding the eldest child
             eldest = min([int(x[4:6]) for x in person.Children]) # O(c)
             ages.append(eldest-yFather)
@@ -169,26 +170,27 @@ def calcAveFirstTimeFatherAge(persondict):
 
 ######################## Functions for exercise 4 ########################
 
-def firstTimeMotherAge(persondict):
+def first_time_mother_age(people):
     """
     Will calculate the age at which Mothers have their first child.
     - Father: XXXXFF-XXXX
     - Child: XXXXCC-XXXX
-    - Age at fatherhood: CC-FF
+    - Age at motherhood: CC-FF
     """
     ages = []
 
-    for person in persondict.values():
-        if person.Children != [] and person.Gender=="Female":
-            yFather = int(person.CPR[4:6])
+    for _, person in people.items():
+        if person.getChildren() != [] and person.getGender()=="Female":
+            yMother = int(person.getCPR()[4:6])
             # Finding the eldest child
             eldest = min([int(x[4:6]) for x in person.Children])
-            ages.append(eldest-yFather)
+            ages.append(eldest-yMother)
     ages.sort()
     counter = Counter(ages)
     age_vals = [i for i in counter.keys()]
     prop = [i/len(ages) for i in counter.values()]
-    plt.bar(age_vals, prop)
+    plt.bar(age_vals, prop, color="r")
+    plt.xticks(age_vals)
     plt.xlabel("Age of first-time motherhood")
     plt.ylabel("Proportion")
     plt.title("Distribution of ages of first-time motherhood")
@@ -198,7 +200,7 @@ def firstTimeMotherAge(persondict):
 
 ######################## Functions for exercise 5 ########################
 
-def calcAveFirstTimeMotherAge(persondict):
+def ave_first_time_mother_age(persondict):
     """
     Will calculate the age at which mothers have their first child.
     - Father: XXXXFF-XXXX
@@ -214,24 +216,24 @@ def calcAveFirstTimeMotherAge(persondict):
             eldest = min([int(x[4:6]) for x in person.Children])
             ages.append(eldest-yFather)
     x = 28.9 # Average age of first-time mothers in denmark according to statistics denmark
-    print("--------------Comparison of mean age of first-time fatherhood----------------")
+    print("--------------Comparison of mean age of first-time motherhood----------------")
     print(f"Test data: {round(sum(ages)/len(ages), 1)}\nData from Statistics Denmark (2006): {x}")
 
 ##########################################################################
 
 ######################## Functions for exercise 6 ########################
 
-def Parenthood_percentage(people):                          #Needs to be updated to the proper path, this was just made from own directory
+def parenthood_percentage(people):                          #Needs to be updated to the proper path, this was just made from own directory
 	"""Percentage of males and females who are not parents"""
 	males, females = [], []
 
 
 	for person in people.values(): # O(x)                                                                #Iterating over the person class values in the getData dict
 		#"1" means they have children, "0" means they do not have children
-		if person.Gender == "Male" and len(person.Children) != 0: males.append("1")          
-		elif person.Gender == "Male" and len(person.Children) == 0: males.append("0")
-		if person.Gender == "Female" and len(person.Children) != 0: females.append("1")
-		elif person.Gender == "Female" and len(person.Children) == 0: females.append("0")
+		if person.getGender() == "Male" and len(person.getChildren()) != 0: males.append("1")          
+		elif person.getGender() == "Male" and len(person.getChildren()) == 0: males.append("0")
+		if person.getGender() == "Female" and len(person.getChildren()) != 0: females.append("1")
+		elif person.getGender() == "Female" and len(person.getChildren()) == 0: females.append("0")
 
 
 	Number_of_males = len(males)
@@ -241,14 +243,14 @@ def Parenthood_percentage(people):                          #Needs to be updated
 	Non_fathers = males.count("0")
 	Non_mothers = females.count("0") # O(x)
 
-	return "Percentage of non fathers: " + str((Non_fathers/Number_of_males)*100), "percentage of non mothers: " + str((Non_mothers/Number_of_females)*100)
+	print("Percentage of non fathers: " + str(round((Non_fathers/Number_of_males)*100, 2)), "percentage of non mothers: " + str(round((Non_mothers/Number_of_females)*100, 2)))
 
 
 ##########################################################################
 
 ######################## Functions for exercise 7 ########################
 
-def calcParentAgeDiff(people):
+def ave_parent_age_diff(people):
     
     encountered_children = set()
     differences = []
@@ -256,19 +258,19 @@ def calcParentAgeDiff(people):
     for cpr, person in people.items(): # O(x)
         
 
-        parents = person.Parents
+        parents = person.getParents()
 
 
         if parents != [] and cpr not in encountered_children: # O(c)
         
             p1 = people[parents[0]]
             p2 = people[parents[1]]
-            diff = abs(int(p1.CPR[4:6])-int(p2.CPR[4:6]))
+            diff = abs(int(p1.getCPR()[4:6])-int(p2.getCPR()[4:6]))
             differences.append(diff)
 
             # Making sure that mother/father pair are not added to list again
 
-            for child in p1.Children:
+            for child in p1.getChildren():
                 encountered_children.add(child)
 
 
@@ -278,7 +280,7 @@ def calcParentAgeDiff(people):
 
 ######################## Functions for exercise 8 ########################
 
-def findGrandParents(people):
+def find_grandparents(people):
 
     num_people_w_grandparents = 0
     encountered_people = set()
@@ -291,14 +293,14 @@ def findGrandParents(people):
                 if parent.Parents!=[] and cpr not in encountered_people: # O(m)
                     num_people_w_grandparents+=1
                     
-    print(len(people.keys()))
+    # print(len(people.keys()))
     print(f"{num_people_w_grandparents} people have a living grandparent, corresponding to {round(num_people_w_grandparents/len(people.keys()),2)*100}% of the data")
 
 ##########################################################################
 
 ######################## Functions for exercise 9 ########################
 
-def findAveCousins(dict):
+def find_num_ave_cousins(dict):
     """
     - Takes dictionary of cpr->person and returns average number of cousins (float)
     - Cousins are found via:
@@ -317,25 +319,25 @@ def findAveCousins(dict):
     considered_grandparents = set()
 
     for cpr,grandparent in dict.items(): # O(x)
-        if grandparent.Children !=[] and cpr not in considered_grandparents: # Person has children and family that has not already been considered
+        if grandparent.getChildren() !=[] and cpr not in considered_grandparents: # Person has children and family that has not already been considered
             # Finding person's partner
             c1 = dict[grandparent.Children[0]] 
-            partner = [i for i in c1.Parents if i != cpr][0]
+            partner = [i for i in c1.getParents() if i != cpr][0]
             # Adding grandparents to set
             considered_grandparents.add(cpr)
             considered_grandparents.add(partner)
             parent_cprs = grandparent.getChildren()
             cousins = 0
             for p_cpr in parent_cprs: # iterating through parents, O(p)
-                cousins += len(dict[p_cpr].getChildren()) # Summing up number of cousings: Number of children each sibling has
+                cousins += len(dict[p_cpr].getChildren()) # Summing up number of cousins: Number of children each sibling has
             num_cousins.append(cousins)
-    return f"Average number of cousins: {sum(num_cousins)/len(num_cousins)}"
+    print(f"Average number of cousins: {round(sum(num_cousins)/len(num_cousins),2)}")
 
 ##########################################################################
 
 ######################### Functions for exercise 10 #########################
 
-def firstBornGender(people):
+def first_born_gender(people):
     """
     - Will calculate female/male percentages of firstborn children
     Method:
@@ -368,18 +370,18 @@ def firstBornGender(people):
             
             encountered_parents.add(cpr)
             
-            # Find other parent
+            # Find other parent - family is not accounted for >1 times
             
             otherparent=[i for i in people[firstborncpr].getParents() if i != cpr][0] # O(2) max.
             encountered_parents.add(otherparent)
     
-    return f"Gender:\tPercentage firstborn:\nMale:\t{round(100*m_firstborn/(m_firstborn+f_firstborn),2)}%\nFemale:\t{round(100*f_firstborn/(m_firstborn+f_firstborn),2)}%"
+    print(f"Gender:\tPercentage firstborn:\nMale:\t{round(100*m_firstborn/(m_firstborn+f_firstborn),2)}%\nFemale:\t{round(100*f_firstborn/(m_firstborn+f_firstborn),2)}%")
 
 ##########################################################################
 
 ######################### Functions for exercise 11 #########################
 
-def parentsIn2Families(people):
+def parents_with_2_families(people):
     
     couples = set()
     parents = set()
@@ -423,52 +425,53 @@ def parentsIn2Families(people):
 
 ######################### Functions for exercise 12 #########################
 
-# def height_comparison_of_parents(people):
-# 	"""Counting number of tall/tall, tall/normal, tall/short, normal/normal, 
-# 	normal/short and short/short parent pairs"""
-#     tall_tall, tall_normal, tall_short, normal_normal, normal_short, short_short = 0, 0, 0, 0, 0, 0
+def height_comparison_of_parents(people):
+	"""Counting number of tall/tall, tall/normal, tall/short, normal/normal, 
+	normal/short and short/short parent pairs"""
+	
+	tall_tall, tall_normal, tall_short, normal_normal, normal_short, short_short = 0, 0, 0, 0, 0, 0
 
-#     encountered_parents = list()
-    
-#     for _, person in people.items():
-        
-#         parents = person.getParents()
-        
-#         if parents != [] and parents[0] not in encountered_parents and parents[1] not in encountered_parents:
+	encountered_parents = list()
 
-#             #Making it so the father is always defined as p1
-#             if (int(people[parents[0]].CPR[9:11]) % 2) == 0:
-#                 p1 = people[parents[1]]
-#                 p2 = people[parents[0]]
-#             elif (int(people[parents[0]].CPR[9:11]) % 2) != 0:
-#                 p1 = people[parents[0]]
-#                 p2 = people[parents[1]]
-
-#             h1, h2 = int(p1.getHeight()), int(p2.getHeight())
-
-#             #Tall men
-#             if h1 > 184.4 and h2 > 170.2: tall_tall += 1                                #tall women
-#             elif h1 > 184.4 and h2 <= 170.2 and h2 >= 164.2: tall_normal += 1           #normal women
-#             elif h1 > 184.4 and h2 < 164.2: tall_short += 1                             #short women
-
-#             #Average men
-#             elif h1 <= 184.4 and h1 >= 178.4 and h2 > 170.2: tall_normal += 1                                #tall women
-#             elif h1 <= 184.4 and h1 >= 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_normal += 1             #normal women
-#             elif h1 <= 184.4 and h1 >= 178.4 and h2 < 164.2: normal_short += 1                               #short women
-
-#             #Short men
-#             elif h1 < 178.4 and h2 > 170.2: tall_short += 1                             #tall women
-#             elif h1 < 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_short += 1          #normal women
-#             elif h1 < 178.4 and h2 < 164.2: short_short += 1                            #short women
-
-#             encountered_parents.add(parents[0])
-#             encountered_parents.add(parents[1])
+	for _, person in people.items():
 
 
-# 	total = tall_tall + tall_normal + tall_short + normal_normal + normal_short + short_short
+		parents = person.getParents()
 
 
-# 	print("Heights\t\tPercentage" + "\nTall/tall\t"+str((tall_tall/total)*100)+"%", "\nTall/normal\t"+str((tall_normal/total)*100)+"%", "\nTall/short\t"+str((tall_short/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/short\t"+str((normal_short/total)*100)+"%", "\nShort/short\t"+str((short_short/total)*100)+"%")			
+		if parents != [] and parents not in encountered_parents:
+
+			#Making it so the father is always defined as p1
+			if (int(people[parents[0]].getCPR()[9:11]) % 2) == 0:
+				p1 = people[parents[1]]
+				p2 = people[parents[0]]
+			elif (int(people[parents[0]].getCPR()[9:11]) % 2) != 0:
+				p1 = people[parents[0]]
+				p2 = people[parents[1]]
+
+			h1, h2 = int(p1.getHeight()), int(p2.getHeight())
+			
+			#Tall men
+			if h1 > 184.4 and h2 > 170.2: tall_tall += 1                                #tall women
+			elif h1 > 184.4 and h2 <= 170.2 and h2 >= 164.2: tall_normal += 1           #normal women
+			elif h1 > 184.4 and h2 < 164.2: tall_short += 1                             #short women
+			
+			#Average men
+			elif h1 <= 184.4 and h1 >= 178.4 and h2 > 170.2: tall_normal += 1                                #tall women
+			elif h1 <= 184.4 and h1 >= 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_normal += 1             #normal women
+			elif h1 <= 184.4 and h1 >= 178.4 and h2 < 164.2: normal_short += 1                               #short women
+			
+			#Short men
+			elif h1 < 178.4 and h2 > 170.2: tall_short += 1                             #tall women
+			elif h1 < 178.4 and h2 <= 170.2 and h2 >= 164.2: normal_short += 1          #normal women
+			elif h1 < 178.4 and h2 < 164.2: short_short += 1                            #short women
+
+			encountered_parents.append(parents)
+
+	total = tall_tall + tall_normal + tall_short + normal_normal + normal_short + short_short
+
+
+	print("Heights\t\tPercentage" + "\nTall/tall\t"+str(round((tall_tall/total)*100, 2))+"%"+"\nTall/normal\t"+str(round((tall_normal/total)*100, 2))+"%"+"\nTall/short\t"+str(round((tall_short/total)*100, 2))+"%"+"\nNormal/normal\t"+str(round((normal_normal/total)*100, 2))+"%"+"\nNormal/short\t"+str(round((normal_short/total)*100,2))+"%"+"\nShort/short\t"+str(round((short_short/total)*100,2))+"%")
 
 ##########################################################################
 
@@ -509,7 +512,7 @@ def children_heights(people):
 		if girl < 164.2: short += 1
 
 	total = tall + normal + short
-	print("Height\tPercentage" + "\nTall\t"+str((tall/total)*100)+"%" + "\nNormal\t"+str((normal/total)*100)+"%" + "\nShort\t"+str((short/total)*100)+"%")
+	print("Height\tPercentage" + "\nTall\t"+str(round((tall/total)*100, 2))+"%" + "\nNormal\t"+str(round((normal/total)*100, 2))+"%" + "\nShort\t"+str((round((short/total)*100, 2)))+"%")
 
 
 ##########################################################################
@@ -536,8 +539,8 @@ def BMI_of_parents(people):
 			p2 = people[parents[0]]
 
 
-			h1, h2 = int(p1.Height), int(p2.Height)
-			w1, w2 = int(p1.Weight), int(p2.Weight)
+			h1, h2 = int(p1.getHeight()), int(p2.getHeight())
+			w1, w2 = int(p1.getWeight()), int(p2.getWeight())
 			p1_bmi, p2_bmi = w1/((h1/100)*(h1/100)), w2/((h2/100)*(h2/100))
 
 			#fat men
@@ -560,14 +563,14 @@ def BMI_of_parents(people):
 	total = fat_fat + fat_normal + fat_thin + normal_normal + normal_thin + thin_thin
 
 
-	print("BMI\t\tPercentage" + "\nFat/fat\t\t"+str((fat_fat/total)*100)+"%", "\nFat/normal\t"+str((fat_normal/total)*100)+"%", "\nFat/thin\t"+str((fat_thin/total)*100)+"%", "\nNormal/normal\t"+str((normal_normal/total)*100)+"%", "\nNormal/thin\t"+str((normal_thin/total)*100)+"%", "\nThin/thin\t"+str((thin_thin/total)*100)+"%")				
+	print("BMI\t\tPercentage" + "\nFat/fat\t\t"+str(round((fat_fat/total)*100, 2))+"%", "\nFat/normal\t"+str(round((fat_normal/total)*100, 2))+"%", "\nFat/thin\t"+str(round((fat_thin/total)*100, 2))+"%", "\nNormal/normal\t"+str(round((normal_normal/total)*100, 2))+"%", "\nNormal/thin\t"+str(round((normal_thin/total)*100, 2))+"%", "\nThin/thin\t"+str(round((thin_thin/total)*100, 2))+"%")				
 
 
 ##########################################################################
 
 ######################### Functions for exercise 15 #########################
 
-def not_the_parents(people):
+def not_biological_parent(people):
 	"""Function for finding children whos listed parents are not their actual parents (at least 1 is not)"""
 	inheritance = {("A", "A"): ("A", "O"), ("A","B"): ("A", "B", "AB", "O"), ("A", "AB"): ("A", "B", "AB"), ("A", "O"): ("A", "O"), ("B", "A"): ("A", "B", "AB", "O"), ("B", "B"): ("B", "O"), ("B", "AB"): ("A", "B", "AB"), ("B", "O"): ("B", "O"), ("AB", "A"): ("A", "B", "AB"), ("AB", "B"): ("A", "B", "AB"), ("AB", "AB"): ("A", "B", "AB"), ("AB", "O"): ("A", "B"), ("O", "A"): ("A", "O"), ("O", "B"): ("B", "O"), ("O", "AB"): ("A", "B"), ("O", "O"): ("O")}
 
@@ -584,20 +587,22 @@ def not_the_parents(people):
 			pbloodtype = (p2.getBloodType()[:-1], p1.getBloodType()[:-1])                 #Parents blood types, mother's first
 			cbloodtype = person.getBloodType()[:-1]                                  #Person's blood type
 			if cbloodtype not in inheritance[pbloodtype]: 
-				kids.append(person)
+				kids.append(person.getCPR())
 
-	print("Children, where at least 1 parent is not their biological parent:\n")
-	print(kids)
+	s = "Children, where at least 1 parent is not their biological parent:\n"
+	s += "\n".join(kids)
+	print(s)        
+        
 
 ##########################################################################
 
 ######################### Functions for exercise 16 #########################
 
-def canDonateTo(bt1, bt2):
+def can_donate_to(bt1, bt2):
     x_can_donate_to = {"A+": ["A+", "AB+"], "A-": ["A+", "A-", "AB+", "AB-"], "B+":["B+", "AB+"], "B-":["B+","B-","AB+","AB-"], "O+": ["A+","B+","O+","AB+"], "O-": ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"], "AB+":["AB+"], "AB-":["AB+", "AB-"]}
     return bt2 in x_can_donate_to[bt1]
 
-def fathersBloodDonateToSons(people):
+def fathers_that_can_donate_blood_to_sons(people):
     """Will create a dictionary of father -> list of sons that can receive blood from father
     Method:
         Iterate through people dict, make list of father cprs
@@ -622,17 +627,18 @@ def fathersBloodDonateToSons(people):
             
             child = people[child_cpr]
             
-            if canDonateTo(father.getBloodType(), child.getBloodType()) and child.getGender()=="Male":
+            if can_donate_to(father.getBloodType(), child.getBloodType()) and child.getGender()=="Male":
                 fToSDonate[father_cpr].append(child_cpr)
     
     for father, sons in fToSDonate.items():
-        print(f"Father {father} can donate to: {sons}")
+        if len(sons)>0:
+            print(f"Father {father} can donate blood to: {sons}")
 
 ##########################################################################
 
 ######################### Functions for exercise 17 #########################
 
-def personCanDonateBloodToGrandparents(people):
+def can_donate_to_grandparents(people):
 
     person_to_grandparents = {}
 
@@ -651,7 +657,7 @@ def personCanDonateBloodToGrandparents(people):
     for person, grandparents in person_to_grandparents.items(): # O(x)
         
     
-        x = [i for i in grandparents if canDonateTo(people[person].getBloodType(), people[i].getBloodType())] # O (g) ~ O(x)
+        x = [i for i in grandparents if can_donate_to(people[person].getBloodType(), people[i].getBloodType())] # O (g) ~ O(x)
         
         if x !=[]:
         
