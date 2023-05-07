@@ -107,10 +107,11 @@ def age_gender_dist(people):
     m_ages_data, f_ages_data = calc_age_dist_DK()
 
     print("------Comparing age and gender distributions------")
-    print("Age range:\nGender:\npeople.db\tDKpopulation.csv:\n")
+    print("Age range:\nGender:\tpeople.db\tDKpopulation.csv:\n")
     
     for ages in m_ages_test.keys(): # O(x)
         print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}")
+    print("Conclusion: Age and gender distribution very similar to that of the Danish population (2023).")
 
 ########################################################################
 
@@ -127,7 +128,7 @@ def first_time_father_age(people):
     ages = []
 
     for person in people.values(): # O(x)
-        if person.Children != [] and person.getGender()=="Male":
+        if person.getChildren() != [] and person.getGender()=="Male":
             yFather = int(person.getCPR()[4:6])
             # Finding the eldest child
             eldest = min([int(x[4:6]) for x in person.getChildren()]) # O(c)
@@ -136,12 +137,21 @@ def first_time_father_age(people):
     counter = Counter(ages)
     age_vals = [i for i in counter.keys()]
     prop = [i/len(ages) for i in counter.values()]
-    plt.bar(age_vals, prop)
-    plt.xlabel("Age of first-time fatherhood")
-    plt.ylabel("Proportion")
-    plt.xticks(age_vals)
-    plt.title("Distribution of ages of first-time fatherhood")
-    plt.show()
+    x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
+    while x not in ["Y", "N"]:
+        x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
+    if x=="Y":
+        plt.bar(age_vals, prop)
+        plt.xlabel("Age of first-time fatherhood")
+        plt.ylabel("Proportion")
+        plt.xticks(age_vals)
+        plt.title("Distribution of ages of first-time fatherhood")
+        plt.show()
+    else:
+         print("Age:\tPercentage:")
+         for age, proportion in zip(age_vals, prop):
+              print(f"{age}:\t{round(proportion*100, 2)}%")
+              
 
 ##########################################################################
 
@@ -165,6 +175,7 @@ def ave_first_time_father_age(people):
     x = 31.3 # Average age of first-time fathers in denmark according to statistics denmark
     print("--------------Comparison of mean age of first-time fatherhood----------------")
     print(f"Test data: {round(sum(ages)/len(ages), 1)}\nData from Statistics Denmark: {x}")
+    print("Conclusion: Much lower than average. However, not inconvievable.")
 
 ##########################################################################
 
@@ -189,12 +200,21 @@ def first_time_mother_age(people):
     counter = Counter(ages)
     age_vals = [i for i in counter.keys()]
     prop = [i/len(ages) for i in counter.values()]
-    plt.bar(age_vals, prop, color="r")
-    plt.xticks(age_vals)
-    plt.xlabel("Age of first-time motherhood")
-    plt.ylabel("Proportion")
-    plt.title("Distribution of ages of first-time motherhood")
-    plt.show()
+    x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
+    while x not in ["Y", "N"]:
+        x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
+    if x=="Y":
+        plt.bar(age_vals, prop)
+        plt.xlabel("Age of first-time fatherhood")
+        plt.ylabel("Proportion")
+        plt.xticks(age_vals)
+        plt.title("Distribution of ages of first-time fatherhood")
+        plt.show()
+        return
+    else:
+         print("Age:\tPercentage:")
+         for age, proportion in zip(age_vals, prop):
+              print(f"{age}:\t{round(proportion*100, 2)}%")
 
 ##########################################################################
 
@@ -218,6 +238,7 @@ def ave_first_time_mother_age(persondict):
     x = 28.9 # Average age of first-time mothers in denmark according to statistics denmark
     print("--------------Comparison of mean age of first-time motherhood----------------")
     print(f"Test data: {round(sum(ages)/len(ages), 1)}\nData from Statistics Denmark (2006): {x}")
+    print("Conclusion: Much lower than average. However, not unreasonable.")
 
 ##########################################################################
 
@@ -243,7 +264,7 @@ def parenthood_percentage(people):                          #Needs to be updated
 	Non_fathers = males.count("0")
 	Non_mothers = females.count("0") # O(x)
 
-	print("Percentage of non fathers: " + str(round((Non_fathers/Number_of_males)*100, 2)), "percentage of non mothers: " + str(round((Non_mothers/Number_of_females)*100, 2)))
+	print("Percentage of men not fathers: " + str(round((Non_fathers/Number_of_males)*100, 2)), "% percentage of women not mothers: " + str(round((Non_mothers/Number_of_females)*100, 2))+"%")
 
 
 ##########################################################################
@@ -274,7 +295,7 @@ def ave_parent_age_diff(people):
                 encountered_children.add(child)
 
 
-    print(f"Average age differences between parents in data: {round(sum(differences)/len(differences))}")
+    print(f"Average age differences between parents in data: {round(sum(differences)/len(differences), 2)}")
 
 ##########################################################################
 
@@ -374,6 +395,7 @@ def first_born_gender(people):
             encountered_parents.add(otherparent)
     
     print(f"Gender:\tPercentage firstborn:\nMale:\t{round(100*m_firstborn/(m_firstborn+f_firstborn),2)}%\nFemale:\t{round(100*f_firstborn/(m_firstborn+f_firstborn),2)}%")
+    print("According to these percentages, it is more likely that the firstborn will be female.")
 
 ##########################################################################
 
@@ -542,8 +564,8 @@ def children_heights(people):
 		if girl < 164.2: short += 1
 
 	total = tall + normal + short
-	print("Height\tPercentage" + "\nTall\t"+str(round((tall/total)*100, 2))+"%" + "\nNormal\t"+str(round((normal/total)*100, 2))+"%" + "\nShort\t"+str((round((short/total)*100, 2)))+"%")
-
+	print("Height of child\tPercentage" + "\nTall\t"+str(round((tall/total)*100, 2))+"%" + "\nNormal\t"+str(round((normal/total)*100, 2))+"%" + "\nShort\t"+str((round((short/total)*100, 2)))+"%")
+	print("According to the above distribution, it can be concluded that tall parents produce tall children.")
 
 ##########################################################################
 
@@ -593,7 +615,8 @@ def BMI_of_parents(people):
 	total = fat_fat + fat_normal + fat_thin + normal_normal + normal_thin + thin_thin
 
 
-	print("BMI\t\tPercentage" + "\nFat/fat\t\t"+str(round((fat_fat/total)*100, 2))+"%", "\nFat/normal\t"+str(round((fat_normal/total)*100, 2))+"%", "\nFat/thin\t"+str(round((fat_thin/total)*100, 2))+"%", "\nNormal/normal\t"+str(round((normal_normal/total)*100, 2))+"%", "\nNormal/thin\t"+str(round((normal_thin/total)*100, 2))+"%", "\nThin/thin\t"+str(round((thin_thin/total)*100, 2))+"%")				
+	print("BMI:\t\tPercentage:" + "\nFat/fat\t\t"+str(round((fat_fat/total)*100, 2))+"%", "\nFat/normal\t"+str(round((fat_normal/total)*100, 2))+"%", "\nFat/thin\t"+str(round((fat_thin/total)*100, 2))+"%", "\nNormal/normal\t"+str(round((normal_normal/total)*100, 2))+"%", "\nNormal/thin\t"+str(round((normal_thin/total)*100, 2))+"%", "\nThin/thin\t"+str(round((thin_thin/total)*100, 2))+"%")				
+	print("According to the above distribution, it is not obvious that people with higher BMIs have children at a significantly high rate.")
 
 
 ##########################################################################
@@ -659,10 +682,11 @@ def fathers_that_can_donate_blood_to_sons(people):
             
             if can_donate_to(father.getBloodType(), child.getBloodType()) and child.getGender()=="Male":
                 fToSDonate[father_cpr].append(child_cpr)
-    
+
+    print("Father:\tSons that are able to recieve blood from father:")
     for father, sons in fToSDonate.items():
         if len(sons)>0:
-            print(f"Father {father} can donate blood to: {sons}")
+            print(f"{father}: {sons}")
 
 ##########################################################################
 
@@ -694,8 +718,9 @@ def can_donate_to_grandparents(people):
             personToGrandparentsBlood[person] = x
 
     s = ""
+    print("Person:\tGrandparents that can recieve their blood:")
     for person, grandparents in personToGrandparentsBlood.items():
-         s += f"Person {person} can donate to the following grandparents: {grandparents}\n"
+         s += f"{person}: {grandparents}\n"
 
     print(s)
 
