@@ -283,14 +283,12 @@ def ave_parent_age_diff(people):
 def find_grandparents(people):
 
     num_people_w_grandparents = 0
-    encountered_people = set()
 
-    for cpr, person in people.items(): # O(x)
-        encountered_people.add(cpr)
+    for cpr, person in people.items(): # O(x) - Iterating through grandchildren
         if person.getParents() != []: 
-            for parent_cpr in person.getParents(): # O(p)
+            for parent_cpr in person.getParents(): # O(p) - Iterating through grandchilds' parents
                 parent = people[parent_cpr]
-                if parent.Parents!=[] and cpr not in encountered_people: # O(m)
+                if parent.getParents()!=[]: # O(m) - If  child->parent->grandparent exits, add 1
                     num_people_w_grandparents+=1
                     
     # print(len(people.keys()))
@@ -380,6 +378,38 @@ def first_born_gender(people):
 ##########################################################################
 
 ######################### Functions for exercise 11 #########################
+
+
+# def parents_w_2_familiesV3(people):
+#     parents = set()
+#     couples = set()
+#     for _, person in people.items():
+#         for parent in person.getParents():
+#              parents.add(parent)
+#     my_dict = {i:list(parents).count(i) for i in list(parents)}
+#     print(my_dict)
+
+def parents_w_2_familiesV2(people):
+     
+     couples = set()
+
+     for _, person in people.items():
+          
+          if person.getParents()!=[]:
+               parents = person.getParents()
+               # sort according to cpr
+               parents.sort(key= lambda x: (x[4:6], x[2:4], x[:2]))
+               p1, p2 = parents[0], parents[1]
+               couples.add((p1,p2))
+     
+     list_of_parents = list()
+     for couple in couples:
+          list_of_parents.append(couple[0])
+          list_of_parents.append(couple[1])
+    
+     my_dict = {i:list_of_parents.count(i) for i in list_of_parents}
+     rec = sum([v for _, v in my_dict.items() if v > 1])
+     print(f"Number of parents in >2 families: {round(rec/len(my_dict.keys())*100, 2)}")
 
 def parents_with_2_families(people):
     

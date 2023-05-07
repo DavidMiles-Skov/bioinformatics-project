@@ -87,7 +87,8 @@ Authors: Rolf Larsen and David Miles-Skov
 
         if num==11:
 
-            parents_with_2_families(people)
+            parents_w_2_familiesV2(people)
+            
 
         if num==12:
 
