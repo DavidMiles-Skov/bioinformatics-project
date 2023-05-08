@@ -3,7 +3,7 @@ from functions import *
 
 def getInput():
     print("--------------------------------------------------")
-    print("""1. Age and gender distrubution.
+    print("""1. Age and gender distribution of dataset.
 2. Age distribution of first-time fatherhood.
 3. Assessing normality of age distribution of first-time fatherhood.
 4. Age distribution of first-time motherhood.
@@ -12,7 +12,7 @@ def getInput():
 7. Average age difference between parents.
 8. Number of people with a living grandparent.
 9. Average number of cousins.
-10. Proportion of firsborn being female of male.
+10. Proportion of firsborn being female or male.
 11. Number of people that have children with more than one partner.
 12. Analysis of height differences between couples.
 13. Do tall parents have tall children?
@@ -87,7 +87,8 @@ Authors: Rolf Larsen and David Miles-Skov
 
         if num==11:
 
-            parents_with_2_families(people)
+            parents_w_2_familiesV2(people)
+            
 
         if num==12:
 

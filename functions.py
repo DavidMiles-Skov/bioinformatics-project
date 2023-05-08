@@ -136,6 +136,7 @@ def first_time_father_age(people):
     ages.sort() # O(log(x))
     counter = Counter(ages)
     age_vals = [i for i in counter.keys()]
+    print(f"Minimum Age: {min(ages)}\nMaximum Age: {max(ages)}\nMean Age: {round(sum(ages)/len(ages), 2)}")
     prop = [i/len(ages) for i in counter.values()]
     x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
     while x not in ["Y", "N"]:
@@ -175,7 +176,7 @@ def ave_first_time_father_age(people):
     x = 31.3 # Average age of first-time fathers in denmark according to statistics denmark
     print("--------------Comparison of mean age of first-time fatherhood----------------")
     print(f"Test data: {round(sum(ages)/len(ages), 1)}\nData from Statistics Denmark: {x}")
-    print("Conclusion: Much lower than average. However, not inconvievable.")
+    print("Conclusion: Much lower than average. However, not inconceivable.")
 
 ##########################################################################
 
@@ -200,15 +201,16 @@ def first_time_mother_age(people):
     counter = Counter(ages)
     age_vals = [i for i in counter.keys()]
     prop = [i/len(ages) for i in counter.values()]
+    print(f"Minimum Age: {min(ages)}\nMaximum Age: {max(ages)}\nMean Age: {round(sum(ages)/len(ages), 2)}")
     x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
     while x not in ["Y", "N"]:
         x = input("Display Histogram graphically? (requires matplotlib) Y/N: ")
     if x=="Y":
-        plt.bar(age_vals, prop)
-        plt.xlabel("Age of first-time fatherhood")
+        plt.bar(age_vals, prop, color="r")
+        plt.xlabel("Age of first-time motherhood")
         plt.ylabel("Proportion")
         plt.xticks(age_vals)
-        plt.title("Distribution of ages of first-time fatherhood")
+        plt.title("Distribution of ages of first-time motherhood")
         plt.show()
         return
     else:
@@ -628,6 +630,7 @@ def not_biological_parent(people):
 	inheritance = {("A", "A"): ("A", "O"), ("A","B"): ("A", "B", "AB", "O"), ("A", "AB"): ("A", "B", "AB"), ("A", "O"): ("A", "O"), ("B", "A"): ("A", "B", "AB", "O"), ("B", "B"): ("B", "O"), ("B", "AB"): ("A", "B", "AB"), ("B", "O"): ("B", "O"), ("AB", "A"): ("A", "B", "AB"), ("AB", "B"): ("A", "B", "AB"), ("AB", "AB"): ("A", "B", "AB"), ("AB", "O"): ("A", "B"), ("O", "A"): ("A", "O"), ("O", "B"): ("B", "O"), ("O", "AB"): ("A", "B"), ("O", "O"): ("O")}
 
 	kids = []
+	num_children = 0
 
 	for _, person in people.items(): # O(x)
 
@@ -636,7 +639,7 @@ def not_biological_parent(people):
 		if parents != []:
 			p1 = people[parents[0]]
 			p2 = people[parents[1]]
-
+			num_children+=1
 			pbloodtype = (p2.getBloodType()[:-1], p1.getBloodType()[:-1])                 #Parents blood types, mother's first
 			cbloodtype = person.getBloodType()[:-1]                                  #Person's blood type
 			if cbloodtype not in inheritance[pbloodtype]: 
@@ -644,9 +647,11 @@ def not_biological_parent(people):
 
 	s = "Children, where at least 1 parent is not their biological parent:\n"
 	s += "\n".join(kids)
-	print(s)        
-        
-
+	print(s)
+	print(f"This corresponds to {round(100*len(kids)/num_children, 2)}% of all children in the dataset")
+	with open(r"data\kids-non-biological-parent.txt", "w+") as f:
+		f.write(s)
+     
 ##########################################################################
 
 ######################### Functions for exercise 16 #########################
@@ -684,9 +689,15 @@ def fathers_that_can_donate_blood_to_sons(people):
                 fToSDonate[father_cpr].append(child_cpr)
 
     print("Father:\tSons that are able to recieve blood from father:")
+    x = 0
+    y = 0
     for father, sons in fToSDonate.items():
         if len(sons)>0:
+            x+=1
+            y += len(sons)
             print(f"{father}: {sons}")
+    print(f"Total number of fathers that can donate blood to at least one son: {x}")
+    print(f"Number of sons that can receive blood from their father: {y}")
 
 ##########################################################################
 
@@ -723,5 +734,7 @@ def can_donate_to_grandparents(people):
          s += f"{person}: {grandparents}\n"
 
     print(s)
+    print(f"Total number of grandchildren: {len(personToGrandparentsBlood.keys())}")
+    print(f"Total number of grandparents: {sum([len(i) for i in personToGrandparentsBlood.values()])}")
 
 ##########################################################################
