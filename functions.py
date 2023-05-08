@@ -107,10 +107,10 @@ def age_gender_dist(people):
     m_ages_data, f_ages_data = calc_age_dist_DK()
 
     print("------Comparing age and gender distributions------")
-    print("Age range:\nGender:\tpeople.db\tDKpopulation.csv:\n")
+    print("Age range:\nGender:\tpeople.db \t DKpopulation.csv")
     
     for ages in m_ages_test.keys(): # O(x)
-        print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}")
+        print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}%")
     print("Conclusion: Age and gender distribution very similar to that of the Danish population (2023).")
 
 ########################################################################
