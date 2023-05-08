@@ -110,6 +110,7 @@ def age_gender_dist(people):
     print("Age range:\nGender:\tpeople.db \t DKpopulation.csv")
     
     for ages in m_ages_test.keys(): # O(x)
+        #print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}%")
         print(f"{ages}:\nM: {m_ages_test[ages]}%\t{m_ages_data[ages]}%\nF: {f_ages_test[ages]}%\t{f_ages_data[ages]}%")
     print("Conclusion: Age and gender distribution very similar to that of the Danish population (2023).")
 
@@ -648,7 +649,7 @@ def not_biological_parent(people):
 	s = "Children, where at least 1 parent is not their biological parent:\n"
 	s += "\n".join(kids)
 	print(s)
-	print(f"This corresponds to {round(100*len(kids)/num_children, 2)}% of all children in the dataset")
+	print(f"{len(kids)} children have at least 1 non-biological parent.\nThis corresponds to {round(100*len(kids)/num_children, 2)}% of all children in the dataset")
 	with open(r"data\kids-non-biological-parent.txt", "w+") as f:
 		f.write(s)
      

@@ -115,7 +115,7 @@ Authors: Rolf Larsen and David Miles-Skov
             can_donate_to_grandparents(people)
 
         if num==18:
-        
+            
             exit()
 
         num = getInput()
